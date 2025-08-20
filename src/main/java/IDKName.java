@@ -4,13 +4,13 @@ public class IDKName {
     private String name;
     private Scanner scanner;
     private final String line = "_".repeat(60);
-    private String[] list;
+    private Task[] list;
     private int currentListPos;
 
     public IDKName() {
         this.name = "IDKName";
         this.scanner = new Scanner(System.in);
-        this.list = new String[100];
+        this.list = new Task[100];
         this.currentListPos = 0;
     }
 
@@ -29,26 +29,53 @@ public class IDKName {
     private void echo() {
         String userInput;
         while (true) {
-            System.out.print("Message Prompt ('bye': exit, 'list': list ");
+            System.out.print("Message Prompt: ");
             userInput = scanner.nextLine();
+            String[] parts = userInput.split(" ");
             System.out.println(this.line);
-            if (userInput.toLowerCase().equals("bye")) {
-                break;
-            } else if (userInput.toLowerCase().equals("list")) {
-                for (int i = 0; i < this.currentListPos; i++) {
-                    System.out.println(String.format("%d. %s", i + 1, this.list[i]));
+
+            try {
+                String firstPart = parts[0];
+                String adjustedFirstPart = firstPart.toLowerCase();
+                if (adjustedFirstPart.equals("bye")) {
+                    break;
+                } else if (adjustedFirstPart.equals("list")) {
+                    for (int i = 0; i < this.currentListPos; i++) {
+                        System.out.println(String.format("%d. %s", i + 1, this.list[i].toString()));
+                    }
+                    System.out.println(this.line);
+                } else if (adjustedFirstPart.equals("mark") || adjustedFirstPart.equals("unmark")) {
+                    if (parts.length < 2) {
+                        System.out.println("Please specify task number");
+                    } else {
+                        int taskNumber = Integer.parseInt(parts[1]) - 1;
+                        Task t = this.list[taskNumber];
+                        if (adjustedFirstPart.equals("mark")) {
+                            t.markDone();
+                            System.out.println("Nice! I've marked this task as done:");
+                            System.out.println(t);
+                        } else {
+                            t.markUndone();
+                            System.out.println("OK, I've marked this task as not done yet:");
+                            System.out.println(t);
+                        }
+                    }
                 }
-                System.out.println(this.line);
-            } else {
-                String message = String.format("added: %s%n%s", userInput, this.line);
-                this.addList(userInput);
-                System.out.println(message);
+                else {
+                    String message = String.format("added: %s%n%s", userInput, this.line);
+                    this.addList(userInput);
+                    System.out.println(message);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid task number");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Invalid command");
             }
         }
     }
 
     private void addList(String item) {
-        this.list[this.currentListPos] = item;
+        this.list[this.currentListPos] = new Task(item);
         this.currentListPos++;
     }
 
