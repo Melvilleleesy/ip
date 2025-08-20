@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class    IDKName {
+public class IDKName {
     private String name;
     private Scanner scanner;
     private final String line = "_".repeat(60);
@@ -108,10 +108,9 @@ public class    IDKName {
         this.currentListPos++;
     }
 
-    public static void main(String[] args) {
-        IDKName chatbot = new IDKName();
-        System.out.println(chatbot.greetings());
-        chatbot.echo();
-        System.out.println(chatbot.goodbye());
+    public void run() {
+        System.out.println(greetings());
+        echo();
+        System.out.println(goodbye());
     }
 }
