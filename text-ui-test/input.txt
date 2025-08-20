@@ -1,0 +1,8 @@
+todo hello world
+deadline to see the world/by tomorrow
+event to say hello/from today 3pm/to tomorrow 4pm
+list
+mark 1
+list
+unmark1
+bye
