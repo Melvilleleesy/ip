@@ -1,7 +1,46 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+____________________________________________________________
+Hello! I'm IDKName
+What can I do for you?
+____________________________________________________________
+Message Prompt: todo hello world
+____________________________________________________________
+Got it. I've added this task:
+[T][ ] hello world
+Now you have 1 tasks in the list.
+____________________________________________________________
+Message Prompt: deadline to see the world/by tomorrow
+____________________________________________________________
+Got it. I've added this task:
+[D][ ] to see the world (by: tomorrow)
+Now you have 2 tasks in the list.
+____________________________________________________________
+Message Prompt: event to say hello/from today 3pm/to tomorrow 4pm
+____________________________________________________________
+Got it. I've added this task:
+[E][ ] to say hello (from: from today 3pm to: to tomorrow 4pm)
+Now you have 3 tasks in the list.
+____________________________________________________________
+Message Prompt: list
+____________________________________________________________
+1. [T][ ] hello world
+2. [D][ ] to see the world (by: tomorrow)
+3. [E][ ] to say hello (from: from today 3pm to: to tomorrow 4pm)
+____________________________________________________________
+Message Prompt: mark 1
+____________________________________________________________
+Nice! I've marked this task as done:
+[T][X] hello world
+Message Prompt: list
+____________________________________________________________
+1. [T][X] hello world
+2. [D][ ] to see the world (by: tomorrow)
+3. [E][ ] to say hello (from: from today 3pm to: to tomorrow 4pm)
+____________________________________________________________
+Message Prompt: unmark 1
+____________________________________________________________
+OK, I've marked this task as not done yet:
+[T][ ] hello world
+Message Prompt: bye
+____________________________________________________________
+Bye. Hope to see you again!
+____________________________________________________________
