@@ -41,7 +41,7 @@ public class IDKName {
                     break;
                 } else if (commandLowerCase.equals("list")) {
                     for (int i = 0; i < this.currentListPos; i++) {
-                        System.out.println(String.format("%d. %s", i + 1, this.list[i].toString()));
+                        System.out.printf("%d. %s%n", i + 1, this.list[i].toString());
                     }
                     System.out.println(this.line);
                 } else if (commandLowerCase.equals("mark") || commandLowerCase.equals("unmark")) {
@@ -50,6 +50,9 @@ public class IDKName {
                     } else {
                         int taskNumber = Integer.parseInt(parts[1]) - 1;
                         Task t = this.list[taskNumber];
+                        if (t == null) {
+                            System.out.println("Please enter a valid task number.");
+                        }
                         if (commandLowerCase.equals("mark")) {
                             t.markDone();
                             System.out.println("Nice! I've marked this task as done:");
@@ -62,22 +65,27 @@ public class IDKName {
                     }
                 } else {
                     if (commandLowerCase.equals("todo")) {
-                        System.out.println("Got it. I've added this task:");
-                        this.addList(0, parts[1]);
-                        System.out.println(this.list[this.currentListPos - 1].toString());
-                        System.out.println(String.format("Now you have %d tasks in the list.", this.currentListPos));
+                        if (this.addList(0, parts[1])) {
+                            System.out.println("Got it. I've added this task:");
+                            System.out.println(this.list[this.currentListPos - 1].toString());
+                            System.out.printf("Now you have %d tasks in the list.%n", this.currentListPos);
+                        }
                     } else if (commandLowerCase.equals("deadline")) {
-                        System.out.println("Got it. I've added this task:");
-                        this.addList(1, parts[1]);
-                        System.out.println(this.list[this.currentListPos - 1].toString());
-                        System.out.println(String.format("Now you have %d tasks in the list.", this.currentListPos));
+                        if (this.addList(1, parts[1])) {
+                            System.out.println("Got it. I've added this task:");
+                            System.out.println(this.list[this.currentListPos - 1].toString());
+                            System.out.printf("Now you have %d tasks in the list.%n", this.currentListPos);
+                        }
                     } else if (commandLowerCase.equals("event")){
-                        System.out.println("Got it. I've added this task:");
-                        this.addList(2, parts[1]);
-                        System.out.println(this.list[this.currentListPos - 1].toString());
-                        System.out.println(String.format("Now you have %d tasks in the list.", this.currentListPos));
+                        if (this.addList(2, parts[1])) {
+                            System.out.println("Got it. I've added this task:");
+                            System.out.println(this.list[this.currentListPos - 1].toString());
+                            System.out.printf("Now you have %d tasks in the list.%n", this.currentListPos);
+                        }
                     } else {
-                        System.out.println("Please enter with a command (Eg. todo, deadline, event, list, bye)");
+                        System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
+                        System.out.println("Please enter with a valid command");
+                        System.out.println("(Eg. todo, deadline, event, list, bye)");
                     }
                     System.out.println(this.line);
                 }
@@ -89,23 +97,32 @@ public class IDKName {
         }
     }
 
-    private void addList(int i, String item) {
-        if (i == 0) {
-            this.list[this.currentListPos] = new Todo(item);
-        } else if (i == 1) {
-            String[] parts = item.split("/");
-            String description = parts[0].trim();
-            String by = parts[1].trim();
-            String when = by.replace("by ", "");
-            this.list[this.currentListPos] = new Deadline(description, when);
-        } else {
-            String[] parts = item.split("/");
-            String description = parts[0].trim();
-            String from = parts[1].trim();
-            String to = parts[2];
-            this.list[this.currentListPos] = new Event(description, from, to);
+    private boolean addList(int i, String item) {
+        if (item.isEmpty()) {
+            return false;
         }
-        this.currentListPos++;
+            if (i == 0) {
+                this.list[this.currentListPos] = new Todo(item);
+            } else if (i == 1) {
+                String[] parts = item.split("/");
+                if (parts.length < 2) {
+                    return false;
+                }
+                String description = parts[0].trim();
+                String by = parts[1].trim().replace("by ", "");
+                this.list[this.currentListPos] = new Deadline(description, by);
+            } else {
+                String[] parts = item.split("/");
+                if (parts.length < 3) {
+                    return false;
+                }
+                String description = parts[0].trim();
+                String from = parts[1].trim();
+                String to = parts[2].trim();
+                this.list[this.currentListPos] = new Event(description, from, to);
+            }
+            this.currentListPos++;
+            return true;
     }
 
     public void run() {
