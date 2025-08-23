@@ -1,11 +1,25 @@
 public class Event extends Task {
-    private String start;
-    private String end;
+    private final String start;
+    private final String end;
 
     public Event(String message, String start, String end) {
         super(message);
         this.start = start;
         this.end = end;
+    }
+
+    public String[] getTimePeriod() {
+        return new String[] {this.start, this.end};
+    }
+
+    @Override
+    public String getTaskType() {
+        return "E";
+    }
+
+    @Override
+    public String getDueDate() {
+        return "";
     }
 
     @Override
