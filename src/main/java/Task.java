@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -8,8 +11,8 @@ public abstract class Task {
     }
 
     abstract public String getTaskType();
-    abstract public String getDueDate();
-    abstract public String[] getTimePeriod();
+    abstract public LocalDate getDueDate();
+    abstract public LocalDateTime[] getTimePeriod();
 
     public boolean getMark() {
         return this.isDone;
