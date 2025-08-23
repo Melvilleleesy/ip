@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -7,7 +7,19 @@ public class Task {
         this.isDone = false;
     }
 
-    public String getStatusIcon() {
+    abstract public String getTaskType();
+    abstract public String getDueDate();
+    abstract public String[] getTimePeriod();
+
+    public boolean getMark() {
+        return this.isDone;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    private String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
