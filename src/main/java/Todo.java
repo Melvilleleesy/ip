@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Todo extends Task{
     public Todo(String message) {
         super(message);
@@ -5,8 +8,7 @@ public class Todo extends Task{
 
     @Override
     public String toString() {
-        String super_s = "[T]" + super.toString();
-        return super_s;
+        return "[T]" + super.toString();
     }
 
     @Override
@@ -15,12 +17,12 @@ public class Todo extends Task{
     }
 
     @Override
-    public String getDueDate() {
-        return "";
+    public LocalDate getDueDate() {
+        return null;
     }
 
     @Override
-    public String[] getTimePeriod() {
+    public LocalDateTime[] getTimePeriod() {
         return null;
     }
 }

@@ -1,15 +1,19 @@
-public class Event extends Task {
-    private final String start;
-    private final String end;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public Event(String message, String start, String end) {
+public class Event extends Task {
+    private final LocalDateTime start;
+    private final LocalDateTime end;
+
+    public Event(String message, LocalDateTime start, LocalDateTime end) {
         super(message);
         this.start = start;
         this.end = end;
     }
 
-    public String[] getTimePeriod() {
-        return new String[] {this.start, this.end};
+    public LocalDateTime[] getTimePeriod() {
+        return new LocalDateTime[] {this.start, this.end};
     }
 
     @Override
@@ -18,12 +22,14 @@ public class Event extends Task {
     }
 
     @Override
-    public String getDueDate() {
-        return "";
+    public LocalDate getDueDate() {
+        return null;
     }
 
     @Override
     public String toString() {
-        return String.format("[E]%s (from: %s to: %s)", super.toString(), this.start, this.end);
+        String startDate = this.start.format(DateTimeFormatter.ofPattern("MMM d yyyy HHmm"));
+        String endDate = this.end.format(DateTimeFormatter.ofPattern("MMM d yyyy HHmm"));
+        return String.format("[E]%s (from: %s to: %s)", super.toString(),startDate, endDate);
     }
 }

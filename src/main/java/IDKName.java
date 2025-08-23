@@ -6,11 +6,14 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 public class IDKName {
     private final String name;
     private final Scanner scanner;
-    private final String line = "_".repeat(60);
+    private final String line = "_".repeat(75);
     private final String filePath;
     private final ArrayList<Task> list;
 
@@ -79,11 +82,11 @@ public class IDKName {
 
                 switch (taskType) {
                     case "D":
-                        String dueDate = t.getDueDate();
+                        LocalDate dueDate = t.getDueDate();
                         textToAdd = textToAdd + " | " + dueDate;
                         break;
                     case "E":
-                        String[] timePeriod = t.getTimePeriod();
+                        LocalDateTime[] timePeriod = t.getTimePeriod();
                         textToAdd = textToAdd + " | " + timePeriod[0] + "-" + timePeriod[1];
                         break;
                     default:
@@ -121,7 +124,8 @@ public class IDKName {
                         break;
                     case "D":
                         if (parts.length < 4) continue;
-                        String dueDate = parts[3].trim();
+                        String date = parts[3].trim();
+                        LocalDate dueDate = LocalDate.parse(date);
                         t = new Deadline(taskDescription, dueDate);
                         break;
                     case "E":
@@ -130,7 +134,9 @@ public class IDKName {
                         String[] subParts = timePeriod.split("\\s*-\\s*", 2);
                         String start = subParts[0];
                         String end = subParts[1];
-                        t = new Event(taskDescription, start, end);
+                        LocalDateTime startDate = LocalDateTime.parse(start);
+                        LocalDateTime endDate = LocalDateTime.parse(end);
+                        t = new Event(taskDescription, startDate, endDate);
                         break;
                     default:
                         continue;
@@ -176,7 +182,13 @@ public class IDKName {
                 } else {
                     System.out.printf("OOPS!!! I'm sorry, but I don't know what that means :-(" +
                             "%nPlease enter a valid command and a valid instruction" +
-                            "%n(Eg. todo [instruction], deadline [instruction])%n%s%n", this.line);
+                            "%nEg. usage: " +
+                            "%n-list" +
+                            "%n-bye" +
+                            "%n-mark/unmark task id" +
+                            "%n-todo description" +
+                            "%n-deadline description / yyyy-mm-dd" +
+                            "%n-event description / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss%n%s%n", this.line);
                 }
             } catch (NumberFormatException e) {
                 System.out.printf("Please enter a valid command:" +
@@ -184,6 +196,10 @@ public class IDKName {
             } catch (IndexOutOfBoundsException e) {
                 System.out.printf("Task not found. Please enter a valid task number.%n%s",
                         this.line);
+            } catch (DateTimeParseException e) {
+                System.out.printf("Invalid date format.Please enter as:" +
+                        "%n-deadline description/yyyy-MM-dd" +
+                        "%n-event description/yyyy-MM-ddTHH:mm:ss%n%s%n", this.line);
             }
         }
 
@@ -197,13 +213,15 @@ public class IDKName {
             this.list.add(t);
             break;
         case "deadline":
+
             String[] deadlineParts = item.split("/"); // split item into description and time
             if (deadlineParts.length < 2) {
                 return;
             }
-            String deadlineDescript = deadlineParts[0].trim();
+            String deadlineDescription = deadlineParts[0].trim();
             String by = deadlineParts[1].trim().replace("by ", "");
-            t = new Deadline(deadlineDescript, by);
+            LocalDate date = LocalDate.parse(by);
+            t = new Deadline(deadlineDescription, date);
             this.list.add(t);
             break;
         case "event":
@@ -211,10 +229,12 @@ public class IDKName {
             if (eventParts.length < 3) {
                 return;
             }
-            String eventDescript = eventParts[0].trim();
+            String eventDescription = eventParts[0].trim();
             String from = eventParts[1].trim();
             String to = eventParts[2].trim();
-            t = new Event(eventDescript, from, to);
+            LocalDateTime startDate = LocalDateTime.parse(from);
+            LocalDateTime endDate = LocalDateTime.parse(to);
+            t = new Event(eventDescription, startDate, endDate);
             this.list.add(t);
             break;
         default:
