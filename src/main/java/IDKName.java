@@ -2,8 +2,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class IDKName {
-    private String name;
-    private Scanner scanner;
+    private final String name;
+    private final Scanner scanner;
     private final String line = "_".repeat(60);
     private ArrayList<Task> list;
 
@@ -25,12 +25,32 @@ public class IDKName {
                 "%n%s", this.line);
     }
 
+    private void markDoneOrUndone(boolean b, String taskNumber) {
+        int task_Id = Integer.parseInt(taskNumber) - 1; // may throw NumberFormatException
+        Task t = this.list.get(task_Id);
+        if (b) {
+            t.markDone();
+        } else {
+            t.markUndone();
+        }
+    }
+
+    private void delete(String taskNumber) {
+        int task_Id = Integer.parseInt(taskNumber) - 1; // may throw NumberFormatException
+        Task t = this.list.get(task_Id);
+        System.out.print("Noted. I've removed this task:");
+        System.out.println(t.toString());
+        this.list.remove(task_Id);
+        System.out.printf("Now you have %d tasks in the list.%n",
+                this.list.size());
+    }
+
     private void echo() {
         String userInput;
         while (true) {
             System.out.print("Message Prompt: ");
             userInput = scanner.nextLine();
-            String[] parts = userInput.split(" ", 2);
+            String[] parts = userInput.split(" ", 2); // split (command, total description)
             System.out.println(this.line);
 
             try {
@@ -43,92 +63,70 @@ public class IDKName {
                         System.out.printf("%d. %s%n", i + 1, this.list.get(i).toString());
                     }
                     System.out.println(this.line);
-                } else if (commandLowerCase.equals("mark") || commandLowerCase.equals("unmark")) {
-                    if (parts.length < 2) {
-                        System.out.println("Please specify a task number");
-                    } else {
-                        int taskNumber = Integer.parseInt(parts[1]) - 1;
-                        Task t = this.list.get(taskNumber);
-                        if (commandLowerCase.equals("mark")) {
-                            t.markDone();
-                            System.out.println("Nice! I've marked this task as done:");
-                            System.out.println(t);
-                        } else {
-                            t.markUndone();
-                            System.out.println("OK, I've marked this task as not done yet:");
-                            System.out.println(t);
-                        }
-                    }
-                } else if (commandLowerCase.equals("delete")) {
-                    if (parts.length < 2) {
-                        System.out.println("Please specify a task number");
-                    } else {
-                        int taskNumber = Integer.parseInt(parts[1]) - 1;
-                        Task t = this.list.get(taskNumber);
-                        System.out.print("Noted. I've removed this task:");
-                        System.out.println(t.toString());
-                        System.out.printf("Now you have %d tasks in the list.%n", this.list.size());
-                        System.out.println(this.line);
-                        this.list.remove(taskNumber);
-
-                    }
-                } else {
-                    if (commandLowerCase.equals("todo")) {
-                        if (this.addList(0, parts[1])) {
-                            System.out.println("Got it. I've added this task:");
-                            System.out.println(this.list.get(this.list.size() - 1).toString());
-                            System.out.printf("Now you have %d tasks in the list.%n", this.list.size());
-                        }
-                    } else if (commandLowerCase.equals("deadline")) {
-                        if (this.addList(1, parts[1])) {
-                            System.out.println("Got it. I've added this task:");
-                            System.out.println(this.list.get(this.list.size() - 1).toString());
-                            System.out.printf("Now you have %d tasks in the list.%n", this.list.size());
-                        }
-                    } else if (commandLowerCase.equals("event")){
-                        if (this.addList(2, parts[1])) {
-                            System.out.println("Got it. I've added this task:");
-                            System.out.println(this.list.get(this.list.size() - 1).toString());
-                            System.out.printf("Now you have %d tasks in the list.%n", this.list.size());
-                        }
-                    } else {
-                        System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
-                        System.out.println("Please enter with a valid command");
-                        System.out.println("(Eg. todo, deadline, event, list, bye)");
-                    }
+                } else if (parts.length > 1) {
+                    switch (commandLowerCase) {
+                        case "mark" -> this.markDoneOrUndone(true, parts[1]);
+                        case "unmark" -> this.markDoneOrUndone(false, parts[1]);
+                        case "delete" -> this.delete(parts[1]);
+                        case "todo" -> this.addList("todo", parts[1]);
+                        case "deadline" -> this.addList("deadline", parts[1]);
+                        case "event" -> this.addList("event", parts[1]);
+                        default -> System.out.printf("OOPS!!! I'm sorry, but I don't know what that means :-(" +
+                                "%nPlease enter with a valid command" +
+                                "%n(Eg. todo, deadline, event, list, bye)%n");}
                     System.out.println(this.line);
+                } else {
+                    System.out.printf("OOPS!!! I'm sorry, but I don't know what that means :-(" +
+                            "%nPlease enter a valid command and a valid instruction" +
+                            "%n(Eg. todo [instruction], deadline [instruction])%n%s%n", this.line);
                 }
-            } catch (NumberFormatException | IndexOutOfBoundsException e) {
-                System.out.println("Please enter a valid task number.");
+            } catch (NumberFormatException e) {
+                System.out.printf("Please enter a valid command:" +
+                        "%n[command] [task number]%n%s%n", this.line);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.printf("Task not found. Please enter a valid task number.%n%s",
+                        this.line);
             }
         }
+
     }
 
-    private boolean addList(int i, String item) {
-        if (item.isEmpty()) {
-            return false;
-        }
-            if (i == 0) {
-                this.list.add(new Todo(item));
-            } else if (i == 1) {
-                String[] parts = item.split("/");
-                if (parts.length < 2) {
-                    return false;
-                }
-                String description = parts[0].trim();
-                String by = parts[1].trim().replace("by ", "");
-                this.list.add(new Deadline(description, by));
-            } else {
-                String[] parts = item.split("/");
-                if (parts.length < 3) {
-                    return false;
-                }
-                String description = parts[0].trim();
-                String from = parts[1].trim();
-                String to = parts[2].trim();
-                this.list.add(new Event(description, from, to));
+    private void addList(String type, String item) {
+        Task t = null;
+        switch (type) {
+        case "todo":
+            t = new Todo(item); // add description normally
+            this.list.add(t);
+            break;
+        case "deadline":
+            String[] deadlineParts = item.split("/"); // split item into description and time
+            if (deadlineParts.length < 2) {
+                return;
             }
-            return true;
+            String deadlineDescript = deadlineParts[0].trim();
+            String by = deadlineParts[1].trim().replace("by ", "");
+            t = new Deadline(deadlineDescript, by);
+            this.list.add(t);
+            break;
+        case "event":
+            String[] eventParts = item.split("/"); // split item into description, time period
+            if (eventParts.length < 3) {
+                return;
+            }
+            String eventDescript = eventParts[0].trim();
+            String from = eventParts[1].trim();
+            String to = eventParts[2].trim();
+            t = new Event(eventDescript, from, to);
+            this.list.add(t);
+            break;
+        default:
+            break;
+        }
+        System.out.printf("Got it. I've added this task:" +
+                        "%n %s" +
+                        "%nNow you have %d tasks in the list.%n",
+                t, this.list.size()); // t will never be null as we check if type and item exist
+
     }
 
     public void run() {
