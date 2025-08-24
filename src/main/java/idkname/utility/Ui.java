@@ -41,15 +41,15 @@ public class Ui {
      * </ul>
      */
     public void showDateTimeError() {
-        System.out.printf("Invalid date format.Please enter as:" +
-                "%n-deadline description/yyyy-MM-dd" +
-                "%n-event description/yyyy-MM-ddTHH:mm:ss/yyyy-MM-ddTHH:mm:ss%n%s%n", this.line);
+        System.out.printf("Invalid date format.Please enter as:"
+                + "%n-deadline description/yyyy-MM-dd"
+                + "%n-event description/yyyy-MM-ddTHH:mm:ss/yyyy-MM-ddTHH:mm:ss%n%s%n", this.line);
     }
 
     /**
      * Displays an error message if task data cannot be saved to disk.
      */
-    public void showIOError() {
+    public void showIoError() {
         System.out.printf("Unable to save data.%n%s%n", this.line);
     }
 
@@ -66,26 +66,26 @@ public class Ui {
      * (e.g. a non-integer where a task index is expected).
      */
     public void showNumberFormatError() {
-        System.out.printf("Please enter a valid command:" +
-                "%n[command] [task number]%n%s%n", this.line);
+        System.out.printf("Please enter a valid command:"
+                + "%n[command] [task number]%n%s%n", this.line);
     }
 
     /**
      * Greets the user at the start of the program.
      */
     public void greetings() {
-        System.out.printf("%s" +
-                "%nHello! I'm %s" +
-                "%nWhat can I do for you?" +
-                "%n%s%n", this.line, this.name, this.line);
+        System.out.printf("%s"
+                + "%nHello! I'm %s"
+                + "%nWhat can I do for you?"
+                + "%n%s%n", this.line, this.name, this.line);
     }
 
     /**
      * Displays a goodbye message when the program exits.
      */
     public void goodbye() {
-        System.out.printf("Bye. Hope to see you again!" +
-                "%n%s", this.line);
+        System.out.printf("Bye. Hope to see you again!"
+                + "%n%s", this.line);
     }
 
     /**
@@ -100,7 +100,8 @@ public class Ui {
      *   <li><code>delete &lt;id&gt;</code> — delete a task</li>
      *   <li><code>todo &lt;description&gt;</code> — add a todo task</li>
      *   <li><code>deadline &lt;description&gt; /by yyyy-MM-dd</code> — add a deadline task</li>
-     *   <li><code>event &lt;description&gt; /from yyyy-MM-ddTHH:mm:ss /to yyyy-MM-ddTHH:mm:ss</code> — add an event task</li>
+     *   <li><code>event &lt;description&gt; /from yyyy-MM-ddTHH:mm:ss /to yyyy-MM-ddTHH:mm:ss</code>
+     *   — add an event task</li>
      * </ul>
      * Handles invalid commands and errors gracefully by showing appropriate error messages.
      */
@@ -124,27 +125,27 @@ public class Ui {
                     System.out.println(this.line);
                 } else if (parts.length > 1) {
                     switch (commandLowerCase) {
-                        case "mark" -> this.tasks.markDoneOrUndone(true, parts[1]);
-                        case "unmark" -> this.tasks.markDoneOrUndone(false, parts[1]);
-                        case "delete" -> this.tasks.delete(parts[1]);
-                        case "todo" -> this.tasks.add("todo", parts[1]);
-                        case "deadline" -> this.tasks.add("deadline", parts[1]);
-                        case "event" -> this.tasks.add("event", parts[1]);
-                        default -> System.out.printf("OOPS!!! I'm sorry, but I don't know what that means :-(" +
-                                "%nPlease enter with a valid command" +
-                                "%n(Eg. todo, deadline, event, list, bye)%n");
+                    case "mark" -> this.tasks.markDoneOrUndone(true, parts[1]);
+                    case "unmark" -> this.tasks.markDoneOrUndone(false, parts[1]);
+                    case "delete" -> this.tasks.delete(parts[1]);
+                    case "todo" -> this.tasks.add("todo", parts[1]);
+                    case "deadline" -> this.tasks.add("deadline", parts[1]);
+                    case "event" -> this.tasks.add("event", parts[1]);
+                    default -> System.out.printf("OOPS!!! I'm sorry, but I don't know what that means :-("
+                            + "%nPlease enter with a valid command"
+                            + "%n(Eg. todo, deadline, event, list, bye)%n");
                     }
                     System.out.println(this.line);
                 } else {
-                    System.out.printf("OOPS!!! I'm sorry, but I don't know what that means :-(" +
-                            "%nPlease enter a valid command and a valid instruction" +
-                            "%nEg. usage: " +
-                            "%n-list" +
-                            "%n-bye" +
-                            "%n-mark/unmark task id" +
-                            "%n-todo description" +
-                            "%n-deadline description / yyyy-mm-dd" +
-                            "%n-event description / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss%n%s%n", this.line);
+                    System.out.printf("OOPS!!! I'm sorry, but I don't know what that means :-("
+                            + "%nPlease enter a valid command and a valid instruction"
+                            + "%nEg. usage: "
+                            + "%n-list"
+                            + "%n-bye"
+                            + "%n-mark/unmark task id"
+                            + "%n-todo description"
+                            + "%n-deadline description / yyyy-mm-dd"
+                            + "%n-event description / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss%n%s%n", this.line);
                 }
             } catch (NumberFormatException e) {
                 this.showNumberFormatError();

@@ -1,15 +1,22 @@
 package idkname;
 
-import idkname.task.Event;
-import idkname.task.Deadline;
-import idkname.task.Todo;
-
-import java.time.LocalDateTime;
-import java.time.LocalDate;
-
+/**
+ * Entry point for the IDKName chatbot application.
+ * <p>
+ * This class initializes the chatbot with a storage file path
+ * and starts the application loop.
+ */
 public class Main {
+    /**
+     * Starts the IDKName chatbot application.
+     * <p>
+     * The chatbot loads tasks from <code>./data/IDKName.txt</code>
+     * if available, and begins interacting with the user.
+     *
+     * @param args command-line arguments (not used in this application)
+     */
     public static void main(String[] args) {
-        IDKName chatbot = new IDKName("./data/IDKName.txt");
+        IdKName chatbot = new IdKName("./data/IDKName.txt");
         chatbot.run();
     }
 }
