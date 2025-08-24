@@ -9,7 +9,7 @@ public class Parser {
     }
 
     public static int getTaskId(String taskNumber) {
-        return  Integer.parseInt(taskNumber) - 1;
+        return Integer.parseInt(taskNumber) - 1;
     }
 
     public static String[] deadlineParse(String description) {
