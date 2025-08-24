@@ -1,7 +1,9 @@
+package idkname.task;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Todo extends Task{
+public class Todo extends Task {
     public Todo(String message) {
         super(message);
     }

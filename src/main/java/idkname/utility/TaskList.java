@@ -1,3 +1,11 @@
+package idkname.utility;
+
+import idkname.task.Deadline;
+import idkname.task.Event;
+import idkname.task.Task;
+import idkname.task.Todo;
+
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,16 +28,20 @@ public class TaskList implements Iterable<Task> {
             case "deadline":
 
                 String[] deadlineParts = Parser.deadlineParse(item);
-                assert deadlineParts != null;
-                LocalDate date = LocalDate.parse(deadlineParts[1]);
+                if (deadlineParts == null) {
+                    throw new DateTimeException("");
+                }
+                LocalDate date = Parser.localDateParse(deadlineParts[1]);
                 t = new Deadline(deadlineParts[0], date);
                 this.tasks.add(t);
                 break;
             case "event":
                 String[] eventParts = Parser.eventParse(item);
-                assert eventParts != null;
-                LocalDateTime startDate = LocalDateTime.parse(eventParts[1]);
-                LocalDateTime endDate = LocalDateTime.parse(eventParts[2]);
+                if (eventParts == null) {
+                    throw new DateTimeException("");
+                }
+                LocalDateTime startDate = Parser.localDateTimeParse(eventParts[1]);
+                LocalDateTime endDate = Parser.localDateTimeParse(eventParts[2]);
                 t = new Event(eventParts[0], startDate, endDate);
                 this.tasks.add(t);
                 break;

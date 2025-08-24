@@ -1,3 +1,5 @@
+package idkname.utility;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -22,7 +24,7 @@ public class Parser {
 
     public static String[] eventParse(String description) {
         String[] subParts = description.split("/");
-        if (subParts.length < 4) {
+        if (subParts.length < 3) {
             return null;
         }
         String eventDescription = subParts[0].trim();

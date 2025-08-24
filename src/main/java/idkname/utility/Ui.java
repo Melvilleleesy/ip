@@ -1,4 +1,6 @@
-import java.io.IOException;
+package idkname.utility;
+
+import java.time.DateTimeException;
 import java.util.Scanner;
 
 public class Ui {
@@ -20,11 +22,21 @@ public class Ui {
     public void showDateTimeError() {
         System.out.printf("Invalid date format.Please enter as:" +
                 "%n-deadline description/yyyy-MM-dd" +
-                "%n-event description/yyyy-MM-ddTHH:mm:ss%n%s%n", this.line);
+                "%n-event description/yyyy-MM-ddTHH:mm:ss/yyyy-MM-ddTHH:mm:ss%n%s%n", this.line);
     }
 
     public void showIOError() {
         System.out.printf("Unable to save data.%n%s%n", this.line);
+    }
+
+    public void showIndexOutOfBoundsError() {
+        System.out.printf("Task not found. Please enter a valid task number.%n%s%n",
+                this.line);
+    }
+
+    public void showNumberFormatError() {
+        System.out.printf("Please enter a valid command:" +
+                "%n[command] [task number]%n%s%n", this.line);
     }
 
     public void greetings() {
@@ -82,11 +94,11 @@ public class Ui {
                             "%n-event description / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss%n%s%n", this.line);
                 }
             } catch (NumberFormatException e) {
-                System.out.printf("Please enter a valid command:" +
-                        "%n[command] [task number]%n%s%n", this.line);
+                this.showNumberFormatError();
             } catch (IndexOutOfBoundsException e) {
-                System.out.printf("Task not found. Please enter a valid task number.%n%s",
-                        this.line);
+                this.showIndexOutOfBoundsError();
+            } catch (DateTimeException e) {
+                this.showDateTimeError();
             }
         }
     }
