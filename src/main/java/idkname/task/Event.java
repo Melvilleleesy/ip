@@ -34,4 +34,21 @@ public class Event extends Task {
         String endDate = this.end.format(DateTimeFormatter.ofPattern("MMM d yyyy HHmm"));
         return String.format("[E]%s (from: %s to: %s)", super.toString(),startDate, endDate);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Event)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Event other = (Event) o;
+        LocalDateTime[] dates = other.getTimePeriod();
+        return (this.start.equals(dates[0])) &&
+                (this.end.equals(dates[1]));
+    }
 }

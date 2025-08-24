@@ -32,4 +32,20 @@ public class Deadline extends Task {
         String dueDate = this.date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
         return String.format("[D]%s (by: %s)", super.toString(), dueDate);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Deadline)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Deadline other = (Deadline) o;
+        LocalDate dueDate = other.getDueDate();
+        return (this.date.equals(dueDate));
+    }
 }
