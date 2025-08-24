@@ -135,6 +135,23 @@ public class TaskList implements Iterable<Task> {
     }
 
     /**
+     * Searches the list for similar descriptions
+     *
+     * @param description description to be searched
+     * @return tasklist of all tasks with similar description
+     */
+    public TaskList find(String description) {
+        TaskList taskList = new TaskList();
+        for (Task t : this.tasks) {
+            String tDescription = t.getDescription();
+            if (tDescription.toLowerCase().contains(description.toLowerCase())) {
+                taskList.add(t);
+            }
+        }
+        return taskList;
+    }
+
+    /**
      * Returns an iterator over the tasks in the list.
      *
      * @return an iterator of Task objects
