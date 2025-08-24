@@ -1,5 +1,5 @@
 ____________________________________________________________
-Hello! I'm IDKName
+Hello! I'm idkname.IDKName
 What can I do for you?
 ____________________________________________________________
 Message Prompt: todo hello world

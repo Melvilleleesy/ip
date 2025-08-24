@@ -1,3 +1,5 @@
+package idkname.task;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -43,6 +45,7 @@ public abstract class Task {
         if (this.isDone) {
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println(this.toString());
+            return;
         }
         System.out.println("Task already marked as not done");
         System.out.println(this.toString());
