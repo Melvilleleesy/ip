@@ -1,9 +1,11 @@
 package idkname.utility;
 
-import idkname.task.Todo;
-import idkname.task.Task;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+import idkname.task.Task;
+import idkname.task.Todo;
 
 class TaskListTest {
 

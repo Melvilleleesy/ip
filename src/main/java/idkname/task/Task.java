@@ -28,7 +28,7 @@ public abstract class Task {
      *
      * @return the type code of the task
      */
-    abstract public String getTaskType();
+    public abstract String getTaskType();
 
     /**
      * Returns the due date of this task if it is a Deadline.
@@ -140,7 +140,7 @@ public abstract class Task {
             return false;
         }
         Task other = (Task) o;
-        return (this.isDone == other.getMark()) &&
-                (description.equals(other.getDescription()));
+        return (this.isDone == other.getMark())
+                && (description.equals(other.getDescription()));
     }
 }
