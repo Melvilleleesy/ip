@@ -1,3 +1,10 @@
+package idkname.utility;
+
+import idkname.task.Deadline;
+import idkname.task.Event;
+import idkname.task.Task;
+import idkname.task.Todo;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -74,15 +81,15 @@ public class Storage {
                     case "D":
                         if (parts.length < 4) continue;
                         String date = parts[3].trim();
-                        LocalDate dueDate = LocalDate.parse(date);
+                        LocalDate dueDate = Parser.localDateParse(date);
                         t = new Deadline(taskDescription, dueDate);
                         break;
                     case "E":
                         if (parts.length < 4) continue;
                         String start = parts[3].trim();
                         String end =  parts[4].trim();
-                        LocalDateTime startDate = LocalDateTime.parse(start);
-                        LocalDateTime endDate = LocalDateTime.parse(end);
+                        LocalDateTime startDate = Parser.localDateTimeParse(start);
+                        LocalDateTime endDate = Parser.localDateTimeParse(end);
                         t = new Event(taskDescription, startDate, endDate);
                         break;
                     default:
