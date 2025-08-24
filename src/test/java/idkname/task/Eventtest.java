@@ -1,11 +1,12 @@
 package idkname.task;
 
-import idkname.task.Event;
-import idkname.task.Task;
-import idkname.utility.TaskList;
-import org.junit.jupiter.api.Test;
-import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.time.LocalDateTime;
+
+import org.junit.jupiter.api.Test;
+
+import idkname.utility.TaskList;
 
 class TaskListEventTest {
 
@@ -44,10 +45,10 @@ class TaskListEventTest {
         list.add(e1);
         list.add(e2);
 
-        Task[] expected = { e1, e2 };
+        Task[] expected = {e1, e2};
         int i = 0;
-        for (Task t : list) {                // exercises TaskList.iterator()
-            assertEquals(expected[i], t);     // relies on equals()
+        for (Task t : list) { // exercises TaskList.iterator()
+            assertEquals(expected[i], t); // relies on equals()
             i++;
         }
         assertEquals(expected.length, i);
