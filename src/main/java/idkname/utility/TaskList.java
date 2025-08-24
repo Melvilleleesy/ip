@@ -21,32 +21,32 @@ public class TaskList implements Iterable<Task> {
     public void add(String type, String item) {
         Task t = null;
         switch (type) {
-            case "todo":
-                t = new Todo(item); // add description normally
-                this.tasks.add(t);
-                break;
-            case "deadline":
+        case "todo":
+            t = new Todo(item); // add description normally
+            this.tasks.add(t);
+            break;
+        case "deadline":
 
-                String[] deadlineParts = Parser.deadlineParse(item);
-                if (deadlineParts == null) {
-                    throw new DateTimeException("");
-                }
-                LocalDate date = Parser.localDateParse(deadlineParts[1]);
-                t = new Deadline(deadlineParts[0], date);
-                this.tasks.add(t);
-                break;
-            case "event":
-                String[] eventParts = Parser.eventParse(item);
-                if (eventParts == null) {
-                    throw new DateTimeException("");
-                }
-                LocalDateTime startDate = Parser.localDateTimeParse(eventParts[1]);
-                LocalDateTime endDate = Parser.localDateTimeParse(eventParts[2]);
-                t = new Event(eventParts[0], startDate, endDate);
-                this.tasks.add(t);
-                break;
-            default:
-                break;
+            String[] deadlineParts = Parser.deadlineParse(item);
+            if (deadlineParts == null) {
+                throw new DateTimeException("");
+            }
+            LocalDate date = Parser.localDateParse(deadlineParts[1]);
+            t = new Deadline(deadlineParts[0], date);
+            this.tasks.add(t);
+            break;
+        case "event":
+            String[] eventParts = Parser.eventParse(item);
+            if (eventParts == null) {
+                throw new DateTimeException("");
+            }
+            LocalDateTime startDate = Parser.localDateTimeParse(eventParts[1]);
+            LocalDateTime endDate = Parser.localDateTimeParse(eventParts[2]);
+            t = new Event(eventParts[0], startDate, endDate);
+            this.tasks.add(t);
+            break;
+        default:
+            break;
         }
         System.out.printf("Got it. I've added this task:" +
                         "%n %s" +

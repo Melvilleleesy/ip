@@ -37,16 +37,16 @@ public class Storage {
                         taskType, taskDone, taskDescription);
 
                 switch (taskType) {
-                    case "D":
-                        LocalDate dueDate = t.getDueDate();
-                        textToAdd = textToAdd + " | " + dueDate;
-                        break;
-                    case "E":
-                        LocalDateTime[] timePeriod = t.getTimePeriod();
-                        textToAdd = textToAdd + " | " + timePeriod[0] + " | " + timePeriod[1];
-                        break;
-                    default:
-                        break;
+                case "D":
+                    LocalDate dueDate = t.getDueDate();
+                    textToAdd = textToAdd + " | " + dueDate;
+                    break;
+                case "E":
+                    LocalDateTime[] timePeriod = t.getTimePeriod();
+                    textToAdd = textToAdd + " | " + timePeriod[0] + " | " + timePeriod[1];
+                    break;
+                default:
+                    break;
                 }
                 fw.write(textToAdd);
                 fw.write(System.lineSeparator());
@@ -75,25 +75,25 @@ public class Storage {
                 String taskDescription = parts[2].trim();
                 Task t;
                 switch (taskType) {
-                    case "T":
-                        t = new Todo(taskDescription);
-                        break;
-                    case "D":
-                        if (parts.length < 4) continue;
-                        String date = parts[3].trim();
-                        LocalDate dueDate = Parser.localDateParse(date);
-                        t = new Deadline(taskDescription, dueDate);
-                        break;
-                    case "E":
-                        if (parts.length < 4) continue;
-                        String start = parts[3].trim();
-                        String end =  parts[4].trim();
-                        LocalDateTime startDate = Parser.localDateTimeParse(start);
-                        LocalDateTime endDate = Parser.localDateTimeParse(end);
-                        t = new Event(taskDescription, startDate, endDate);
-                        break;
-                    default:
-                        continue;
+                case "T":
+                    t = new Todo(taskDescription);
+                    break;
+                case "D":
+                    if (parts.length < 4) continue;
+                    String date = parts[3].trim();
+                    LocalDate dueDate = Parser.localDateParse(date);
+                    t = new Deadline(taskDescription, dueDate);
+                    break;
+                case "E":
+                    if (parts.length < 4) continue;
+                    String start = parts[3].trim();
+                    String end =  parts[4].trim();
+                    LocalDateTime startDate = Parser.localDateTimeParse(start);
+                    LocalDateTime endDate = Parser.localDateTimeParse(end);
+                    t = new Event(taskDescription, startDate, endDate);
+                    break;
+                default:
+                    continue;
                 }
                 if ("1".equals(taskDone)) {
                     t.markDone(false);
