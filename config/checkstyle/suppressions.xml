@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD Suppressions 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <!-- Suppress Javadoc requirements in test files -->
+    <suppress checks="JavadocType" files=".*Test\.java"/>
+    <suppress checks="MissingJavadocMethod" files=".*Test\.java"/>
+</suppressions>
