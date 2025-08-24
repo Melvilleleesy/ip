@@ -13,15 +13,41 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+/**
+ * Handles reading from and writing to a persistent storage file
+ * that contains the user's task list.
+ * <p>
+ * Tasks are stored in plain text format, with fields separated by "|".
+ * Supported task types: Todo (T), Deadline (D), Event (E).
+ */
 public class Storage {
     private final TaskList tasks;
     private final String filePath;
 
+    /**
+     * Constructs a Storage object responsible for persisting a given task list.
+     *
+     * @param tasks    the task list to read from or write to
+     * @param filePath the path to the storage file
+     */
     public Storage(TaskList tasks, String filePath) {
         this.tasks = tasks;
         this.filePath = filePath;
     }
 
+    /**
+     * Saves the current tasks to the storage file.
+     * Creates parent directories if they do not exist.
+     * <p>
+     * Tasks are serialized in the following formats:
+     * <ul>
+     *   <li>Todo: {@code T | doneFlag | description}</li>
+     *   <li>Deadline: {@code D | doneFlag | description | yyyy-MM-dd}</li>
+     *   <li>Event: {@code E | doneFlag | description | yyyy-MM-ddTHH:mm | yyyy-MM-ddTHH:mm}</li>
+     * </ul>
+     *
+     * @throws IOException if an error occurs during writing
+     */
     public void save() throws IOException {
         File file = new File(this.filePath);
         File parent = file.getParentFile();
@@ -56,6 +82,14 @@ public class Storage {
         System.out.println("Saving to: " + new File(this.filePath).getAbsolutePath());
     }
 
+    /**
+     * Loads tasks from the storage file into the associated task list.
+     * Ignores invalid or malformed lines.
+     * <p>
+     * Expected line formats are the same as in {@link #save()}.
+     *
+     * @throws FileNotFoundException if the storage file does not exist
+     */
     public void load() throws FileNotFoundException {
         File f = new File(this.filePath);
         if (!f.exists()) {
@@ -96,7 +130,7 @@ public class Storage {
                     continue;
                 }
                 if ("1".equals(taskDone)) {
-                    t.markDone(false);
+                    t.markDone(true);
                 }
                 this.tasks.add(t);
             }
