@@ -17,7 +17,6 @@ import idkname.utility.Ui;
  * and saving/loading tasks from persistent storage.
  */
 public class IdKName {
-    private final String line = "_".repeat(75);
     private final TaskList list;
     private final Storage storage;
     private final Ui ui;
@@ -51,14 +50,14 @@ public class IdKName {
      *     <li>Displays a goodbye message</li>
      * </ul>
      */
-    public void run() {
-        ui.greetings();
-        ui.echo();
-        try {
-            this.storage.save();
-        } catch (IOException e) {
-            ui.showIoError();
-        }
-        ui.goodbye();
+
+    public String getGreeting() { return ui.greetings(); }
+
+    public String getGoodbye() { return ui.goodbye(); }
+
+    public void persistOnExit() throws IOException { storage.save(); }
+
+    public String getResponse(String input) {
+        return ui.getResponse(input);
     }
 }
