@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class Ui {
     private final Scanner scanner;
     private final String name;
-    private final String line = "_".repeat(75);
     private final TaskList tasks;
 
     /**
@@ -28,8 +27,8 @@ public class Ui {
     /**
      * Displays an error message if no save file is found when loading tasks.
      */
-    public void showFileLoadingError() {
-        System.out.printf("No saved file.%n%s%n", this.line);
+    public String showFileLoadingError() {
+        return "No saved file.";
     }
 
     /**
@@ -40,34 +39,33 @@ public class Ui {
      *   <li>event description/yyyy-MM-ddTHH:mm:ss/yyyy-MM-ddTHH:mm:ss</li>
      * </ul>
      */
-    public void showDateTimeError() {
-        System.out.printf("Invalid date format.Please enter as:"
+    public String showDateTimeError() {
+        return String.format("Invalid date format.Please enter as:"
                 + "%n-deadline description/yyyy-MM-dd"
-                + "%n-event description/yyyy-MM-ddTHH:mm:ss/yyyy-MM-ddTHH:mm:ss%n%s%n", this.line);
+                + "%n-event description/yyyy-MM-ddTHH:mm:ss/yyyy-MM-ddTHH:mm:ss");
     }
 
     /**
      * Displays an error message if task data cannot be saved to disk.
      */
-    public void showIoError() {
-        System.out.printf("Unable to save data.%n%s%n", this.line);
+    public String showIoError() {
+        return "Unable to save data.";
     }
 
     /**
      * Displays an error message if the user specifies an invalid task index.
      */
-    public void showIndexOutOfBoundsError() {
-        System.out.printf("Task not found. Please enter a valid task number.%n%s%n",
-                this.line);
+    public String showIndexOutOfBoundsError() {
+        return "Task not found. Please enter a valid task number.";
     }
 
     /**
      * Displays an error message if the user provides an invalid number format
      * (e.g. a non-integer where a task index is expected).
      */
-    public void showNumberFormatError() {
-        System.out.printf("Please enter a valid command:"
-                + "%n[command] [task number]%n%s%n", this.line);
+    public String showNumberFormatError() {
+        return String.format("Please enter a valid command:"
+                + "%n[command] [task number]");
     }
 
     /**
@@ -75,28 +73,46 @@ public class Ui {
      *
      * @param taskList list of tasks to be printed
      */
-    public void printTaskList(TaskList taskList) {
+    public String printTaskList(TaskList taskList) {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < taskList.getTasks().size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, this.tasks.get(i).toString());
+            sb.append(String.format("%d. %s%n", i + 1, taskList.getTasks().get(i).toString()));
         }
+        return sb.toString();
     }
 
     /**
      * Greets the user at the start of the program.
      */
-    public void greetings() {
-        System.out.printf("%s"
-                + "%nHello! I'm %s"
-                + "%nWhat can I do for you?"
-                + "%n%s%n", this.line, this.name, this.line);
+    public String greetings() {
+        return String.format("Hello! I'm %s"
+                + "%nWhat can I do for you?", this.name);
     }
 
     /**
      * Displays a goodbye message when the program exits.
      */
-    public void goodbye() {
-        System.out.printf("Bye. Hope to see you again!"
-                + "%n%s", this.line);
+    public String goodbye() {
+        return "Bye. Hope to see you again!";
+    }
+
+    public String showUnknownCommandError() {
+        return String.format("OOPS!!! I'm sorry, but I don't know what that means :-("
+                + "%nPlease enter with a valid command"
+                + "%n(Eg. todo, deadline, event, find, mark, unmark, list, bye)%n");
+    }
+
+    public String showMissingArgumentError() {
+        return String.format("OOPS!!! I'm sorry, but I don't know what that means :-("
+                + "%nPlease enter a valid command and a valid instruction"
+                + "%nEg. usage: "
+                + "%n-list"
+                + "%n-bye"
+                + "%n-mark/unmark task id"
+                + "%n-find description"
+                + "%n-todo description"
+                + "%n-deadline description / yyyy-mm-dd"
+                + "%n-event description / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss");
     }
 
     /**
@@ -117,55 +133,39 @@ public class Ui {
      * </ul>
      * Handles invalid commands and errors gracefully by showing appropriate error messages.
      */
-    public void echo() {
-        String userInput;
-        while (true) {
-            System.out.print("Message Prompt: ");
-            userInput = scanner.nextLine();
-            String[] parts = Parser.ordinaryParse(userInput); // split (command, total description)
-            System.out.println(this.line);
+    public String getResponse(String userInput) {
+        String[] parts = Parser.ordinaryParse(userInput);
+        StringBuilder out = new StringBuilder();
 
-            try {
-                String command = parts[0];
-                String commandLowerCase = command.toLowerCase();
-                if (commandLowerCase.equals("bye")) {
-                    break;
-                } else if (commandLowerCase.equals("list")) {
-                    printTaskList(this.tasks);
-                    System.out.println(this.line);
-                } else if (parts.length > 1) {
-                    switch (commandLowerCase) {
-                    case "mark" -> this.tasks.markDoneOrUndone(true, parts[1]);
-                    case "unmark" -> this.tasks.markDoneOrUndone(false, parts[1]);
-                    case "delete" -> this.tasks.delete(parts[1]);
-                    case "todo" -> this.tasks.add("todo", parts[1]);
-                    case "deadline" -> this.tasks.add("deadline", parts[1]);
-                    case "event" -> this.tasks.add("event", parts[1]);
-                    case "find" -> printTaskList(this.tasks.find(parts[1]));
-                    default -> System.out.printf("OOPS!!! I'm sorry, but I don't know what that means :-("
-                            + "%nPlease enter with a valid command"
-                            + "%n(Eg. todo, deadline, event, find, mark, unmark, list, bye)%n");
-                    }
-                    System.out.println(this.line);
-                } else {
-                    System.out.printf("OOPS!!! I'm sorry, but I don't know what that means :-("
-                            + "%nPlease enter a valid command and a valid instruction"
-                            + "%nEg. usage: "
-                            + "%n-list"
-                            + "%n-bye"
-                            + "%n-mark/unmark task id"
-                            + "%n-find description"
-                            + "%n-todo description"
-                            + "%n-deadline description / yyyy-mm-dd"
-                            + "%n-event description / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss%n%s%n", this.line);
+        try {
+            String command = parts[0].toLowerCase();
+            if (command.equals("bye")) {
+                out.append("Bye. Hope to see you again soon!\n");
+            } else if (command.equals("list")) {
+                out.append(printTaskList(tasks)).append('\n');
+            } else if (parts.length > 1) {
+                switch (command) {
+                    case "mark" -> out.append(this.tasks.markDoneOrUndone(true, parts[1]));
+                    case "unmark" -> out.append(this.tasks.markDoneOrUndone(false, parts[1]));
+                    case "delete" -> out.append(this.tasks.delete(parts[1]));
+                    case "todo" -> out.append(this.tasks.add("todo", parts[1]));
+                    case "deadline" -> out.append(this.tasks.add("deadline", parts[1]));
+                    case "event" -> out.append(this.tasks.add("event", parts[1]));
+                    case "find" -> out.append(printTaskList(this.tasks.find(parts[1])));
+                    default -> out.append(showUnknownCommandError());
                 }
-            } catch (NumberFormatException e) {
-                this.showNumberFormatError();
-            } catch (IndexOutOfBoundsException e) {
-                this.showIndexOutOfBoundsError();
-            } catch (DateTimeException e) {
-                this.showDateTimeError();
+            } else {
+                out.append(showMissingArgumentError());
             }
+        } catch (NumberFormatException e) {
+            out.append(showNumberFormatError());
+        } catch (IndexOutOfBoundsException e) {
+            out.append(showIndexOutOfBoundsError());
+        } catch (DateTimeException e) {
+            out.append(showDateTimeError());
         }
+
+        return out.toString();
     }
+
 }

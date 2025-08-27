@@ -33,7 +33,7 @@ public class TaskList implements Iterable<Task> {
      * @param item the task description and additional data (e.g., date/time)
      * @throws DateTimeException if the input format for a date/time is invalid
      */
-    public void add(String type, String item) {
+    public String add(String type, String item) {
         Task t = null;
         switch (type) {
         case "todo":
@@ -63,7 +63,7 @@ public class TaskList implements Iterable<Task> {
         default:
             break;
         }
-        System.out.printf("Got it. I've added this task:"
+        return String.format("Got it. I've added this task:"
                         + "%n %s"
                         + "%nNow you have %d tasks in the list.%n",
                 t, this.tasks.size()); // t will never be null as we check if type and item exist
@@ -86,13 +86,11 @@ public class TaskList implements Iterable<Task> {
      * @throws NumberFormatException if the task number is not a valid integer
      * @throws IndexOutOfBoundsException if the task number does not exist in the list
      */
-    public void delete(String taskNumber) {
+    public String delete(String taskNumber) {
         int taskId = Parser.getTaskId(taskNumber); // may throw NumberFormatException
         Task t = this.tasks.get(taskId);
-        System.out.print("Noted. I've removed this task:");
-        System.out.println(t.toString());
-        this.tasks.remove(taskId);
-        System.out.printf("Now you have %d tasks in the list.%n",
+        return String.format("Noted. I've removed this task: %n%s%n Now you have %d tasks in the list.%n",
+                t,
                 this.tasks.size());
     }
 
@@ -124,13 +122,13 @@ public class TaskList implements Iterable<Task> {
      * @throws NumberFormatException if the task number is not a valid integer
      * @throws IndexOutOfBoundsException if the task number does not exist in the list
      */
-    public void markDoneOrUndone(boolean b, String taskNumber) {
+    public String markDoneOrUndone(boolean b, String taskNumber) {
         int taskId = Parser.getTaskId(taskNumber); // may throw NumberFormatException
         Task t = this.tasks.get(taskId);
         if (b) {
-            t.markDone(false);
+            return t.markDone(false);
         } else {
-            t.markUndone();
+            return t.markUndone();
         }
     }
 
