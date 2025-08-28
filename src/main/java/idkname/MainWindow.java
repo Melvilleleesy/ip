@@ -65,6 +65,12 @@ public class MainWindow extends AnchorPane {
         }
     }
 
+    /**
+     * Appends a dialog box containing the bot's response text
+     * to the dialog container in the UI.
+     *
+     * @param text the response text to be displayed in the dialog box
+     */
     public void appendBot(String text) {
         dialogContainer.getChildren().add(
                 DialogBox.getDukeDialog(text, dukeImage)

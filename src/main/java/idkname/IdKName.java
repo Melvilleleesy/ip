@@ -42,21 +42,38 @@ public class IdKName {
     }
 
     /**
-     * Runs the main application loop.
-     * <ul>
-     *     <li>Greets the user</li>
-     *     <li>Handles user commands interactively until "bye" is entered</li>
-     *     <li>Saves the task list to persistent storage</li>
-     *     <li>Displays a goodbye message</li>
-     * </ul>
+     * Returns the initial greeting message shown to the user when the application starts.
+     *
+     * @return the greeting message
      */
+    public String getGreeting() {
+        return ui.greetings();
+    }
 
-    public String getGreeting() { return ui.greetings(); }
+    /**
+     * Returns the farewell message shown to the user when the application exits.
+     *
+     * @return the goodbye message
+     */
+    public String getGoodbye() {
+        return ui.goodbye();
+    }
 
-    public String getGoodbye() { return ui.goodbye(); }
+    /**
+     * Persists the current state of the application before exit.
+     *
+     * @throws IOException if an error occurs while saving data to storage
+     */
+    public void persistOnExit() throws IOException {
+        storage.save();
+    }
 
-    public void persistOnExit() throws IOException { storage.save(); }
-
+    /**
+     * Generates a response for the given user input.
+     *
+     * @param input the raw user input string
+     * @return the application's response to the input
+     */
     public String getResponse(String input) {
         return ui.getResponse(input);
     }
