@@ -34,31 +34,26 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             MainWindow controller = fxmlLoader.<MainWindow>getController();
-            controller.setDuke(chatbot);  // inject the Duke instance
+            controller.setDuke(chatbot);
 
             stage.setOnShown(e -> {
-                // prefer calling a bot/UI method that returns a String greeting
-                // e.g. chatbot.getGreeting() or chatbot.ui.greetings()
-                // If you don't have one yet, you can inline a string temporarily.
-                controller.appendBot(
-                        (chatbot.getGreeting() != null) ? chatbot.getGreeting() : "Hello! I'm IdKName\nWhat can I do for you?"
+                controller.appendBot((chatbot.getGreeting() != null)
+                        ? chatbot.getGreeting()
+                        : "Hello! I'm IdKName\nWhat can I do for you?"
                 );
             });
 
             // add: on close, append goodbye and persist safely
             stage.setOnCloseRequest(e -> {
-                // show goodbye in the chat UI
                 try {
-                    // same note: prefer a method that returns the goodbye text
-                    controller.appendBot(
-                            (chatbot.getGoodbye() != null) ? chatbot.getGoodbye() : "Bye. Hope to see you again soon!"
+                    controller.appendBot((chatbot.getGoodbye() != null)
+                            ? chatbot.getGoodbye()
+                            : "Bye. Hope to see you again soon!"
                     );
-                    // save if your IdKName exposes a persist method
                     chatbot.persistOnExit();
                 } catch (Exception ex) {
                     controller.appendBot("Error saving: " + ex.getMessage());
                 }
-                // allow close to proceed
             });
             stage.show();
         } catch (IOException e) {

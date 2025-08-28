@@ -96,12 +96,25 @@ public class Ui {
         return "Bye. Hope to see you again!";
     }
 
+    /**
+     * Returns the error message shown when the user enters
+     * an unknown command that the application cannot recognize.
+     *
+     * @return a formatted error message indicating an unrecognized command
+     */
     public String showUnknownCommandError() {
         return String.format("OOPS!!! I'm sorry, but I don't know what that means :-("
                 + "%nPlease enter with a valid command"
                 + "%n(Eg. todo, deadline, event, find, mark, unmark, list, bye)%n");
     }
 
+    /**
+     * Returns the error message shown when the user enters
+     * a command without the required arguments.
+     *
+     * @return a formatted error message indicating that arguments are missing,
+     *         along with usage examples for valid commands
+     */
     public String showMissingArgumentError() {
         return String.format("OOPS!!! I'm sorry, but I don't know what that means :-("
                 + "%nPlease enter a valid command and a valid instruction"
@@ -145,14 +158,14 @@ public class Ui {
                 out.append(printTaskList(tasks)).append('\n');
             } else if (parts.length > 1) {
                 switch (command) {
-                    case "mark" -> out.append(this.tasks.markDoneOrUndone(true, parts[1]));
-                    case "unmark" -> out.append(this.tasks.markDoneOrUndone(false, parts[1]));
-                    case "delete" -> out.append(this.tasks.delete(parts[1]));
-                    case "todo" -> out.append(this.tasks.add("todo", parts[1]));
-                    case "deadline" -> out.append(this.tasks.add("deadline", parts[1]));
-                    case "event" -> out.append(this.tasks.add("event", parts[1]));
-                    case "find" -> out.append(printTaskList(this.tasks.find(parts[1])));
-                    default -> out.append(showUnknownCommandError());
+                case "mark" -> out.append(this.tasks.markDoneOrUndone(true, parts[1]));
+                case "unmark" -> out.append(this.tasks.markDoneOrUndone(false, parts[1]));
+                case "delete" -> out.append(this.tasks.delete(parts[1]));
+                case "todo" -> out.append(this.tasks.add("todo", parts[1]));
+                case "deadline" -> out.append(this.tasks.add("deadline", parts[1]));
+                case "event" -> out.append(this.tasks.add("event", parts[1]));
+                case "find" -> out.append(printTaskList(this.tasks.find(parts[1])));
+                default -> out.append(showUnknownCommandError());
                 }
             } else {
                 out.append(showMissingArgumentError());
