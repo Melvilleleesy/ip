@@ -6,12 +6,12 @@ import java.time.format.DateTimeParseException;
 
 import idkname.utility.Storage;
 import idkname.utility.TaskList;
-import idkname.utility.Ui;
+import idkname.utility.Command;
 
 /**
  * Main entry point for the IDKName task management application.
  * <p>
- * This class coordinates between the user interface ({@link Ui}),
+ * This class coordinates between the user interface ({@link Command}),
  * the task list ({@link TaskList}), and the storage system ({@link Storage}).
  * It handles initialization, running the user interaction loop,
  * and saving/loading tasks from persistent storage.
@@ -19,7 +19,7 @@ import idkname.utility.Ui;
 public class IdKName {
     private final TaskList list;
     private final Storage storage;
-    private final Ui ui;
+    private final Command ui;
 
     /**
      * Constructs a new instance of the IDKName application.
@@ -30,7 +30,7 @@ public class IdKName {
      */
     public IdKName(String filePath) {
         this.list = new TaskList();
-        this.ui = new Ui("IDKName", this.list);
+        this.ui = new Command("IDKName", this.list);
         this.storage = new Storage(this.list, filePath);
         try {
             this.storage.load();

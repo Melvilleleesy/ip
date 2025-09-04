@@ -56,7 +56,7 @@ public abstract class Task {
      *
      * @return true if the task is done, false otherwise
      */
-    public boolean getMark() {
+    public boolean getIsMark() {
         return this.isDone;
     }
 
@@ -70,9 +70,9 @@ public abstract class Task {
     }
 
     /**
-     * Returns string representation of a marked task
+     * Returns "X" if the task is done, or a space if not.
      *
-     * @return "X" if task is done and nothing otherwise
+     * @return status icon string
      */
     private String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
@@ -135,7 +135,7 @@ public abstract class Task {
             return false;
         }
         Task other = (Task) o;
-        return (this.isDone == other.getMark())
+        return (this.isDone == other.getIsMark())
                 && (description.equals(other.getDescription()));
     }
 }
