@@ -57,7 +57,7 @@ public class Storage {
         try (FileWriter fw = new FileWriter(file)) {
             for (Task t : this.tasks.getTasks()) {
                 String taskType = t.getTaskType();
-                int taskDone = t.getMark() ? 1 : 0;
+                int taskDone = t.getIsMark() ? 1 : 0;
                 String taskDescription = t.getDescription();
                 String textToAdd = String.format("%s | %d | %s",
                         taskType, taskDone, taskDescription);

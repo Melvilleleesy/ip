@@ -54,7 +54,7 @@ test {
 }
 
 application {
-    mainClass.set("idkname.Launcher")
+    mainClass.set("idkname.main.Launcher")
 }
 
 shadowJar {

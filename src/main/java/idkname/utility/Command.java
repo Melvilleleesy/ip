@@ -7,37 +7,41 @@ import java.util.Scanner;
  * Handles all user interactions with the application, including
  * greetings, goodbye messages, error messages, and command input.
  */
-public class Ui {
+public class Command {
     private final Scanner scanner;
     private final String name;
     private final TaskList tasks;
 
     /**
-     * Constructs a Ui instance with a bot name and a reference to the task list.
+     * Creates a new {@code Command} facade bound to a bot name and task list.
      *
-     * @param name  the name of the bot
-     * @param tasks the task list to operate on
+     * @param name  bot/display name used in greetings
+     * @param tasks the task list this command handler operates on
      */
-    public Ui(String name, TaskList tasks) {
+    public Command(String name, TaskList tasks) {
         this.scanner = new Scanner(System.in);
         this.name = name;
         this.tasks = tasks;
     }
 
     /**
-     * Displays an error message if no save file is found when loading tasks.
+     * Returns the message shown when no save file is found during load.
+     *
+     * @return user-facing error message for missing save file
      */
     public String showFileLoadingError() {
         return "No saved file.";
     }
 
     /**
-     * Displays an error message if the user provides an invalid date or time format.
-     * The expected formats are:
+     * Returns the message shown when a supplied date/time cannot be parsed.
+     * <p>Expected formats (examples):</p>
      * <ul>
-     *   <li>deadline description/yyyy-MM-dd</li>
-     *   <li>event description/yyyy-MM-ddTHH:mm:ss/yyyy-MM-ddTHH:mm:ss</li>
+     *   <li>{@code deadline description/yyyy-MM-dd}</li>
+     *   <li>{@code event description/yyyy-MM-dd'T'HH:mm:ss/yyyy-MM-dd'T'HH:mm:ss}</li>
      * </ul>
+     *
+     * @return user-facing error message describing valid date/time formats
      */
     public String showDateTimeError() {
         return String.format("Invalid date format.Please enter as:"
@@ -46,22 +50,28 @@ public class Ui {
     }
 
     /**
-     * Displays an error message if task data cannot be saved to disk.
+     * Returns the message shown when task data cannot be persisted to disk.
+     *
+     * @return user-facing I/O error message
      */
     public String showIoError() {
         return "Unable to save data.";
     }
 
     /**
-     * Displays an error message if the user specifies an invalid task index.
+     * Returns the message shown when a task index is outside the valid range.
+     *
+     * @return user-facing error message for an invalid task number
      */
     public String showIndexOutOfBoundsError() {
         return "Task not found. Please enter a valid task number.";
     }
 
     /**
-     * Displays an error message if the user provides an invalid number format
-     * (e.g. a non-integer where a task index is expected).
+     * Returns the message shown when a numeric argument is malformed
+     * (e.g., a non-integer where a task index is expected).
+     *
+     * @return user-facing hint on the expected command + task number format
      */
     public String showNumberFormatError() {
         return String.format("Please enter a valid command:"
@@ -69,9 +79,10 @@ public class Ui {
     }
 
     /**
-     * Iterates and prints the list of tasks
+     * Builds a numbered, line-separated view of the provided tasks.
      *
-     * @param taskList list of tasks to be printed
+     * @param taskList the tasks to format
+     * @return formatted list, one task per line with 1-based indexing
      */
     public String printTaskList(TaskList taskList) {
         StringBuilder sb = new StringBuilder();
@@ -82,7 +93,9 @@ public class Ui {
     }
 
     /**
-     * Greets the user at the start of the program.
+     * Returns the greeting shown at application start.
+     *
+     * @return greeting message including the bot name
      */
     public String greetings() {
         return String.format("Hello! I'm %s"
@@ -90,17 +103,18 @@ public class Ui {
     }
 
     /**
-     * Displays a goodbye message when the program exits.
+     * Returns the farewell shown when the program exits.
+     *
+     * @return goodbye message
      */
     public String goodbye() {
         return "Bye. Hope to see you again!";
     }
 
     /**
-     * Returns the error message shown when the user enters
-     * an unknown command that the application cannot recognize.
+     * Returns the message shown when the command word is not recognized.
      *
-     * @return a formatted error message indicating an unrecognized command
+     * @return user-facing error message for unknown commands and a brief hint
      */
     public String showUnknownCommandError() {
         return String.format("OOPS!!! I'm sorry, but I don't know what that means :-("
@@ -109,11 +123,10 @@ public class Ui {
     }
 
     /**
-     * Returns the error message shown when the user enters
-     * a command without the required arguments.
+     * Returns the message shown when a command is missing required arguments.
+     * Provides usage examples for valid commands.
      *
-     * @return a formatted error message indicating that arguments are missing,
-     *         along with usage examples for valid commands
+     * @return user-facing error message plus example usages
      */
     public String showMissingArgumentError() {
         return String.format("OOPS!!! I'm sorry, but I don't know what that means :-("
