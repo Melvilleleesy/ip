@@ -34,11 +34,17 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     public void initialize() {
+        assert scrollPane != null : "FXML 'scrollPane' not injected";
+        assert dialogContainer != null : "FXML 'dialogContainer' not injected";
+        assert userInput != null : "FXML 'userInput' not injected";
+        assert sendButton != null : "FXML 'sendButton' not injected";
+
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
     /** Injects the Duke instance */
     public void setDuke(IdKName d) {
+        assert d != null : "Injected Duke instance must not be null";
         duke = d;
     }
 
@@ -48,6 +54,9 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
+        assert duke != null : "Duke instance not set; call setDuke() before use";
+        assert dialogContainer != null : "dialogContainer not available";
+
         String input = userInput.getText();
         if (input == null || input.isBlank()) return;
         String response = duke.getResponse(input);
@@ -77,6 +86,9 @@ public class MainWindow extends AnchorPane {
      * @param text the response text to be displayed in the dialog box
      */
     public void appendBot(String text) {
+        assert duke != null : "Duke instance not set; call setDuke() before use";
+        assert dialogContainer != null : "dialogContainer not available";
+
         dialogContainer.getChildren().add(
                 DialogBox.getDukeDialog(text, dukeImage)
         );
