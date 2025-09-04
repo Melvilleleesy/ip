@@ -50,7 +50,7 @@ public class Storage {
      */
     public void save() throws IOException {
         File f = new File(this.filePath);
-        assert !f.exists() : "file does not exist";
+        System.out.println("save at: " + this.filePath);
         File parent = f.getParentFile();
         if (parent != null && !parent.exists()) {
             parent.mkdirs();
@@ -78,7 +78,6 @@ public class Storage {
                 fw.write(textToAdd);
                 fw.write(System.lineSeparator());
             }
-            fw.close();
         }
         System.out.println("Saving to: " + new File(this.filePath).getAbsolutePath());
     }
@@ -93,7 +92,7 @@ public class Storage {
      */
     public void load() throws FileNotFoundException {
         File f = new File(this.filePath);
-        assert !f.exists() : "file does not exist";
+        System.out.println("load from: " + this.filePath);
         try (Scanner s = new Scanner(f)) {
             while (s.hasNextLine()) {
                 String line = s.nextLine().trim();

@@ -10,6 +10,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 /**
  * Controller for the main GUI.
  */
@@ -66,14 +68,16 @@ public class MainWindow extends AnchorPane {
         );
         userInput.clear();
         if (input.trim().equalsIgnoreCase("bye")) {
-            // optional: append goodbye explicitly if not already in response
-            if (!response.toLowerCase().contains("bye")) {
+            // Save before closing
+            try {
+                duke.persistOnExit();  // Save the data
+            } catch (IOException e) {
                 dialogContainer.getChildren().add(
-                        DialogBox.getDukeDialog(duke.getGoodbye(), dukeImage)
+                        DialogBox.getDukeDialog("Error saving: " + e.getMessage(), dukeImage)
                 );
             }
 
-            // close the window gracefully
+            // Then close the window
             Stage stage = (Stage) dialogContainer.getScene().getWindow();
             stage.close();
         }
