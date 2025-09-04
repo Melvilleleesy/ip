@@ -17,6 +17,7 @@ import idkname.utility.Command;
  * and saving/loading tasks from persistent storage.
  */
 public class IdKName {
+    private final TaskList list;
     private final Storage storage;
     private final Command command;
 
@@ -28,9 +29,12 @@ public class IdKName {
      * @param filePath the path to the storage file for saving and loading tasks
      */
     public IdKName(String filePath) {
-        TaskList list = new TaskList();
-        this.command = new Command("IdKName", list);
-        this.storage = new Storage(list, filePath);
+        assert filePath != null : "filePath must not be null";
+
+        this.list = new TaskList();
+        this.command = new Command("IDKName", this.list);
+        this.storage = new Storage(this.list, filePath);
+
         try {
             this.storage.load();
         } catch (FileNotFoundException e) {

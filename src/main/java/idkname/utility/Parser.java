@@ -17,6 +17,7 @@ public class Parser {
      *         or 2 (command and remaining content)
      */
     public static String[] ordinaryParse(String input) {
+        assert input != null : "input must not be null";
         return input.split(" ", 2);
     }
 
@@ -28,6 +29,7 @@ public class Parser {
      * @throws NumberFormatException if the task number is not a valid integer
      */
     public static int getTaskId(String taskNumber) {
+        assert taskNumber != null : "taskNumber must not be null";
         return Integer.parseInt(taskNumber) - 1;
     }
 
@@ -40,6 +42,7 @@ public class Parser {
      *         or null if the input is invalid
      */
     public static String[] deadlineParse(String description) {
+        assert description != null : "description must not be null";
         String[] subParts = description.split("/");
         if (subParts.length < 2) {
             return null;
@@ -58,6 +61,7 @@ public class Parser {
      *         or null if the input is invalid
      */
     public static String[] eventParse(String description) {
+        assert description != null : "description must not be null";
         String[] subParts = description.split("/");
         if (subParts.length < 3) {
             return null;
@@ -76,6 +80,7 @@ public class Parser {
      * @throws java.time.format.DateTimeParseException if the string is not in the correct format
      */
     public static LocalDate localDateParse(String date) {
+        assert date != null : "date string must not be null";
         return LocalDate.parse(date);
     }
 
@@ -87,6 +92,7 @@ public class Parser {
      * @throws java.time.format.DateTimeParseException if the string is not in the correct format
      */
     public static LocalDateTime localDateTimeParse(String date) {
+        assert date != null : "date string must not be null";
         return LocalDateTime.parse(date);
     }
 }
