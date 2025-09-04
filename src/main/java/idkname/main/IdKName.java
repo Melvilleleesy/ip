@@ -50,6 +50,7 @@ public class IdKName {
      * @return the greeting message
      */
     public String getGreeting() {
+        System.out.println("greeting works");
         return command.greetings();
     }
 
@@ -59,6 +60,7 @@ public class IdKName {
      * @return the goodbye message
      */
     public String getGoodbye() {
+        System.out.println("goodbye works");
         return command.goodbye();
     }
 
@@ -68,6 +70,7 @@ public class IdKName {
      * @throws IOException if an error occurs while saving data to storage
      */
     public void persistOnExit() throws IOException {
+        System.out.println("save works");
         storage.save();
     }
 

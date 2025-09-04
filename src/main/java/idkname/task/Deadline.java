@@ -76,4 +76,15 @@ public class Deadline extends Task {
         LocalDate dueDate = other.getDueDate();
         return (this.date.equals(dueDate));
     }
+
+    /**
+     * Compares deadlines by due date; other tasks by type rank.
+     */
+    @Override
+    public int compareTo(Task t) {
+        if (!(t instanceof Deadline)) {
+            return super.compareTo(t);
+        }
+        return this.date.compareTo(t.getDueDate());
+    }
 }

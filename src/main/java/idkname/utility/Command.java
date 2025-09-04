@@ -172,8 +172,11 @@ public class Command {
                 case "deadline" -> out.append(this.tasks.add("deadline", parts[1]));
                 case "event" -> out.append(this.tasks.add("event", parts[1]));
                 case "find" -> out.append(printTaskList(this.tasks.find(parts[1])));
+                case "sort" -> out.append(printTaskList(this.tasks.sortTasks(parts[1])));
                 default -> out.append(showUnknownCommandError());
                 }
+            } else if (command.equals("sort")) {
+                out.append(printTaskList((this.tasks.sortTasks())));
             } else {
                 out.append(showMissingArgumentError());
             }
