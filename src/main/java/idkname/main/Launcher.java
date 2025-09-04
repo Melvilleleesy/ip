@@ -1,5 +1,6 @@
-package idkname;
+package idkname.ui;
 
+import idkname.main.Main;
 import javafx.application.Application;
 
 /**
