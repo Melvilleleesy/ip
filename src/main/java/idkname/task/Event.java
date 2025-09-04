@@ -80,4 +80,16 @@ public class Event extends Task {
         return (this.start.equals(dates[0]))
                 && (this.end.equals(dates[1]));
     }
+
+    /**
+     * Compares events by start time; other tasks by type rank.
+     */
+    @Override
+    public int compareTo(Task t) {
+        if (!(t instanceof Event)) {
+            return super.compareTo(t);
+        }
+        LocalDateTime tStartDate = t.getTimePeriod()[0];
+        return this.start.compareTo(tStartDate);
+    }
 }

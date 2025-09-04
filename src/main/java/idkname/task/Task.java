@@ -2,14 +2,18 @@ package idkname.task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * Represents an abstract task with a description and completion status.
  * Subclasses (Todo, Deadline, Event) provide additional fields and behavior.
  */
-public abstract class Task {
+public abstract class Task implements Comparable<Task> {
     protected String description;
     protected boolean isDone;
+    private static final Map<String, Integer> ORDER_OF_TYPES =
+            Map.of("T", 0, "D", 1, "E", 2);
+
 
     /**
      * Constructs a Task with the given description.
@@ -143,5 +147,13 @@ public abstract class Task {
 
         return (this.isDone == other.getIsMark())
                 && (description.equals(other.getDescription()));
+    }
+
+    /**
+     * Compares tasks by type rank (T < D < E).
+     */
+    @Override
+    public int compareTo(Task t) {
+        return ORDER_OF_TYPES.get(this.getTaskType()).compareTo(ORDER_OF_TYPES.get(t.getTaskType()));
     }
 }
