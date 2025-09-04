@@ -49,15 +49,16 @@ public class Storage {
      * @throws IOException if an error occurs during writing
      */
     public void save() throws IOException {
-        File file = new File(this.filePath);
-        File parent = file.getParentFile();
+        File f = new File(this.filePath);
+        assert !f.exists() : "file does not exist";
+        File parent = f.getParentFile();
         if (parent != null && !parent.exists()) {
             parent.mkdirs();
         }
-        try (FileWriter fw = new FileWriter(file)) {
+        try (FileWriter fw = new FileWriter(f)) {
             for (Task t : this.tasks.getTasks()) {
                 String taskType = t.getTaskType();
-                int taskDone = t.getIsMark() ? 1 : 0;
+                int taskDone = t.getIsMarked() ? 1 : 0;
                 String taskDescription = t.getDescription();
                 String textToAdd = String.format("%s | %d | %s",
                         taskType, taskDone, taskDescription);
@@ -92,9 +93,7 @@ public class Storage {
      */
     public void load() throws FileNotFoundException {
         File f = new File(this.filePath);
-        if (!f.exists()) {
-            return;
-        }
+        assert !f.exists() : "file does not exist";
         try (Scanner s = new Scanner(f)) {
             while (s.hasNextLine()) {
                 String line = s.nextLine().trim();

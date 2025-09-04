@@ -40,6 +40,9 @@ public class DialogBox extends HBox {
             e.printStackTrace();
         }
 
+        assert dialog != null : "FXML did not inject Label 'dialog'";
+        assert displayPicture != null : "FXML did not inject ImageView 'displayPicture'";
+
         dialog.setText(text);
         displayPicture.setImage(img);
     }
@@ -50,6 +53,9 @@ public class DialogBox extends HBox {
     private void flip() {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
         Collections.reverse(tmp);
+
+        assert tmp.size() == getChildren().size() : "flip must not change child count";
+
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
     }

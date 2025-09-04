@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
     private static final String DEFAULT_FILE_PATH = "./data/IDKName.txt";
-    private IdKName chatbot = new IdKName(DEFAULT_FILE_PATH);
+    private final IdKName chatbot = new IdKName(DEFAULT_FILE_PATH);
     /**
      * Starts the IDKName chatbot application.
      * <p>
@@ -29,12 +29,19 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) {
+        assert stage != null : "Stage must not be null";
+        assert chatbot != null : "Chatbot must be initialized";
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
+            assert ap != null : "Root AnchorPane should be loaded";
+
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+
             MainWindow controller = fxmlLoader.<MainWindow>getController();
+            assert controller != null : "MainWindow controller not injected by FXML";
             controller.setDuke(chatbot);
 
             stage.setOnShown(e -> {

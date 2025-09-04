@@ -75,8 +75,8 @@ public class Event extends Task {
         if (!super.equals(o)) {
             return false;
         }
-        Event other = (Event) o;
-        LocalDateTime[] dates = other.getTimePeriod();
+        Event comparedWith = (Event) o;
+        LocalDateTime[] dates = comparedWith.getTimePeriod();
         return (this.start.equals(dates[0]))
                 && (this.end.equals(dates[1]));
     }

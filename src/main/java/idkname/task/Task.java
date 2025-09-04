@@ -18,6 +18,7 @@ public abstract class Task {
      * @param description the description of the task
      */
     public Task(String description) {
+        assert description != null : "Task description must not be null";
         this.description = description;
         this.isDone = false;
     }
@@ -55,7 +56,7 @@ public abstract class Task {
      *
      * @return true if the task is done, false otherwise
      */
-    public boolean getIsMark() {
+    public boolean getIsMarked() {
         return this.isDone;
     }
 
@@ -114,6 +115,7 @@ public abstract class Task {
      */
     @Override
     public String toString() {
+        assert description != null : "Task must always have a description";
         return String.format("[%s] %s", this.getStatusIcon(), this.description);
     }
 
@@ -133,8 +135,12 @@ public abstract class Task {
         if (!(o instanceof Task)) {
             return false;
         }
-        Task other = (Task) o;
-        return (this.isDone == other.getIsMark())
-                && (description.equals(other.getDescription()));
+        Task comparedWith = (Task) o;
+
+        assert this.description != null && comparedWith.getDescription() != null
+                : "Tasks compared must have non-null descriptions";
+
+        return (this.isDone == comparedWith.getIsMarked())
+                && (description.equals(comparedWith.getDescription()));
     }
 }
