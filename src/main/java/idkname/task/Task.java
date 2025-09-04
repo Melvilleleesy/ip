@@ -55,7 +55,7 @@ public abstract class Task {
      *
      * @return true if the task is done, false otherwise
      */
-    public boolean getIsMark() {
+    public boolean getIsMarked() {
         return this.isDone;
     }
 
@@ -133,8 +133,8 @@ public abstract class Task {
         if (!(o instanceof Task)) {
             return false;
         }
-        Task other = (Task) o;
-        return (this.isDone == other.getIsMark())
-                && (description.equals(other.getDescription()));
+        Task comparedWith = (Task) o;
+        return (this.isDone == comparedWith.getIsMarked())
+                && (description.equals(comparedWith.getDescription()));
     }
 }
