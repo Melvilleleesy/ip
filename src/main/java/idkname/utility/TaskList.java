@@ -140,12 +140,9 @@ public class TaskList implements Iterable<Task> {
      */
     public TaskList find(String description) {
         TaskList taskList = new TaskList();
-        for (Task t : this.tasks) {
-            String tDescription = t.getDescription();
-            if (tDescription.toLowerCase().contains(description.toLowerCase())) {
-                taskList.add(t);
-            }
-        }
+        this.tasks.stream()
+                .filter(t -> t.getDescription().toLowerCase().contains(description.toLowerCase()))
+                .forEach(taskList::add);
         return taskList;
     }
 
