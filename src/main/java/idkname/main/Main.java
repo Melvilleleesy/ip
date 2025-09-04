@@ -20,7 +20,7 @@ import idkname.ui.MainWindow;
  */
 public class Main extends Application {
     private static final String DEFAULT_FILE_PATH = "./data/IDKName.txt";
-    private IdKName chatbot = new IdKName(DEFAULT_FILE_PATH);
+    private final IdKName chatbot = new IdKName(DEFAULT_FILE_PATH);
     /**
      * Starts the IDKName chatbot application.
      * <p>

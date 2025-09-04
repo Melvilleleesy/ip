@@ -72,8 +72,8 @@ public class Deadline extends Task {
         if (!super.equals(o)) {
             return false;
         }
-        Deadline other = (Deadline) o;
-        LocalDate dueDate = other.getDueDate();
+        Deadline comparedWith = (Deadline) o;
+        LocalDate dueDate = comparedWith.getDueDate();
         return (this.date.equals(dueDate));
     }
 }

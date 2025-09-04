@@ -57,7 +57,7 @@ public abstract class Task {
      *
      * @return true if the task is done, false otherwise
      */
-    public boolean getIsMark() {
+    public boolean getIsMarked() {
         return this.isDone;
     }
 
@@ -116,7 +116,6 @@ public abstract class Task {
      */
     @Override
     public String toString() {
-        assert description != null : "Task must always have a description";
         return String.format("[%s] %s", this.getStatusIcon(), this.description);
     }
 
