@@ -87,6 +87,7 @@ public class TaskList implements Iterable<Task> {
         int taskId = Parser.getTaskId(taskNumber); // may throw NumberFormatException
         assert taskId >= 0 && taskId < this.tasks.size() : "Index out of bounds";
         Task t = this.tasks.get(taskId);
+        this.tasks.remove(t);
         return String.format("Noted. I've removed this task: %n%s%n Now you have %d tasks in the list.%n",
                 t,
                 this.tasks.size());
@@ -147,6 +148,43 @@ public class TaskList implements Iterable<Task> {
             }
         }
         return taskList;
+    }
+
+    /**
+     * Returns all tasks in sorted order.
+     */
+    public TaskList sortTasks() {
+        TaskList sortedTaskList = new TaskList();
+        this.tasks.stream()
+                .sorted()
+                .forEach(sortedTaskList::add);
+        return sortedTaskList;
+    }
+
+    /**
+     * Returns tasks of the given type (todo, deadline, event) in sorted order.
+     *
+     * @param description task type to filter by
+     */
+    public TaskList sortTasks(String description) {
+        if (description == null || description.isBlank()) {
+            return new TaskList(); // empty
+        }
+
+        String taskType;
+        switch (description.trim().toLowerCase()) {
+            case "todo"     -> taskType = "T";
+            case "deadline" -> taskType = "D";
+            case "event"    -> taskType = "E";
+            default         -> { return new TaskList(); }
+        }
+
+        TaskList sortedTaskList = new TaskList();
+        this.tasks.stream()
+                .filter(t -> t.getTaskType().equals(taskType))
+                .sorted()
+                .forEach(sortedTaskList::add);
+        return sortedTaskList;
     }
 
     /**
