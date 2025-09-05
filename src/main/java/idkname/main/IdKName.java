@@ -19,7 +19,7 @@ import idkname.utility.Command;
 public class IdKName {
     private final TaskList list;
     private final Storage storage;
-    private final Command ui;
+    private final Command command;
 
     /**
      * Constructs a new instance of the IDKName application.
@@ -30,14 +30,14 @@ public class IdKName {
      */
     public IdKName(String filePath) {
         this.list = new TaskList();
-        this.ui = new Command("IDKName", this.list);
+        this.command = new Command("IDKName", this.list);
         this.storage = new Storage(this.list, filePath);
         try {
             this.storage.load();
         } catch (FileNotFoundException e) {
-            ui.showFileLoadingError();
+            command.showFileLoadingError();
         } catch (DateTimeParseException e) {
-            ui.showDateTimeError();
+            command.showDateTimeError();
         }
     }
 
@@ -47,7 +47,7 @@ public class IdKName {
      * @return the greeting message
      */
     public String getGreeting() {
-        return ui.greetings();
+        return command.greetings();
     }
 
     /**
@@ -56,7 +56,7 @@ public class IdKName {
      * @return the goodbye message
      */
     public String getGoodbye() {
-        return ui.goodbye();
+        return command.goodbye();
     }
 
     /**
@@ -75,6 +75,6 @@ public class IdKName {
      * @return the application's response to the input
      */
     public String getResponse(String input) {
-        return ui.getResponse(input);
+        return command.getResponse(input);
     }
 }
