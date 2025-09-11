@@ -92,49 +92,43 @@ public class Storage {
      */
     public void load() throws FileNotFoundException {
         File f = new File(this.filePath);
-        System.out.println("load from: " + this.filePath);
         try (Scanner s = new Scanner(f)) {
             while (s.hasNextLine()) {
                 String line = s.nextLine().trim();
-                if (line.isEmpty()) {
-                    continue;
-                }
+                if (line.isEmpty()) continue;
 
                 String[] parts = line.split("\\s*\\|\\s*", 5);
-                if (parts.length < 3) {
-                    continue;
-                }
+                if (parts.length < 3) continue;
 
-                // will always have 3 parts as that's the basic necessity to create a task
-                String taskType = parts[0].trim(); // "T", "D", "E"
+                String taskType = parts[0].trim(); // "T","D","E"
                 String taskDone = parts[1].trim(); // "0" or "1"
-                String taskDescription = parts[2].trim();
+                String desc = parts[2].trim();
+
                 Task t;
                 switch (taskType) {
-                case "T":
-                    t = new Todo(taskDescription);
-                    break;
-                case "D":
-                    if (parts.length < 4) {
+                case "T" -> t = new Todo(desc);
+                case "D" -> {
+                    if (parts.length < 4) continue;
+                    try {
+                        LocalDate due = Parser.localDateParse(parts[3].trim());
+                        t = new Deadline(desc, due);
+                    } catch (Exception ex) {
                         continue;
                     }
-                    String date = parts[3].trim();
-                    LocalDate dueDate = Parser.localDateParse(date);
-                    t = new Deadline(taskDescription, dueDate);
-                    break;
-                case "E":
-                    if (parts.length < 4) {
-                        continue;
-                    }
-                    String start = parts[3].trim();
-                    String end = parts[4].trim();
-                    LocalDateTime startDate = Parser.localDateTimeParse(start);
-                    LocalDateTime endDate = Parser.localDateTimeParse(end);
-                    t = new Event(taskDescription, startDate, endDate);
-                    break;
-                default:
-                    continue;
                 }
+                case "E" -> {
+                    if (parts.length < 5) continue;
+                    try {
+                        LocalDateTime start = Parser.localDateTimeParse(parts[3].trim());
+                        LocalDateTime end   = Parser.localDateTimeParse(parts[4].trim());
+                        t = new Event(desc, start, end);
+                    } catch (Exception ex) {
+                        continue;
+                    }
+                }
+                default -> { continue; }
+                }
+
                 if ("1".equals(taskDone)) {
                     t.markDone(true); // true implies that this comes from loading so no printed message
                 }

@@ -18,7 +18,9 @@ public class Parser {
      */
     public static String[] ordinaryParse(String input) {
         assert input != null : "input must not be null";
-        return input.split(" ", 2);
+        String trimmed = input.trim();
+        if (trimmed.isEmpty()) return new String[] { "" };
+        return trimmed.split("\\s+", 2);
     }
 
     /**
@@ -30,7 +32,12 @@ public class Parser {
      */
     public static int getTaskId(String taskNumber) {
         assert taskNumber != null : "taskNumber must not be null";
-        return Integer.parseInt(taskNumber) - 1;
+        String s = taskNumber.trim();
+        int n = Integer.parseInt(s);
+        if (n <= 0) {
+            throw new NumberFormatException("Task id must be >= 1");
+        }
+        return n - 1;
     }
 
     /**
@@ -43,14 +50,19 @@ public class Parser {
      */
     public static String[] deadlineParse(String description) {
         assert description != null : "description must not be null";
-        String[] subParts = description.split("/");
-        if (subParts.length < 2) {
-            return null;
-        }
-        String deadlineDescription = subParts[0].trim();
-        String by = subParts[1].trim().replace("by ", "");
-        return new String[] {deadlineDescription, by};
+        String s = description.trim();
+        if (s.isEmpty()) return null;
+
+        String[] parts = s.split("\\s*/by\\s*", 2);
+        if (parts.length != 2) return null;
+
+        String desc = parts[0].trim();
+        String by   = parts[1].trim();
+        if (desc.isEmpty() || by.isEmpty()) return null;
+
+        return new String[] { desc, by };
     }
+
 
     /**
      * Parses an event description of the form
@@ -62,14 +74,32 @@ public class Parser {
      */
     public static String[] eventParse(String description) {
         assert description != null : "description must not be null";
-        String[] subParts = description.split("/");
-        if (subParts.length < 3) {
+        String s = description.trim();
+        if (s.isEmpty()) return null;
+
+        String[] left = s.split("\\s*/from\\s*", 2);
+        if (left.length != 2) {
             return null;
         }
-        String eventDescription = subParts[0].trim();
-        String from = subParts[1].trim();
-        String to = subParts[2].trim();
-        return new String[] {eventDescription, from, to};
+
+        String desc = left[0].trim();
+        String[] right = left[1].split("\\s*/to\\s*", 2);
+        if (right.length != 2) {
+            return null;
+        }
+
+        String start = right[0].trim();
+        String end = right[1].trim();
+        if (desc.isEmpty() || start.isEmpty() || end.isEmpty()) return null;
+
+        try {
+            LocalDateTime.parse(start);
+            LocalDateTime.parse(end);
+        } catch (Exception e) {
+            return null;
+        }
+
+        return new String[] { desc, start, end };
     }
 
     /**
@@ -81,7 +111,8 @@ public class Parser {
      */
     public static LocalDate localDateParse(String date) {
         assert date != null : "date string must not be null";
-        return LocalDate.parse(date);
+        String s = date.trim();
+        return LocalDate.parse(s);
     }
 
     /**
@@ -93,6 +124,7 @@ public class Parser {
      */
     public static LocalDateTime localDateTimeParse(String date) {
         assert date != null : "date string must not be null";
-        return LocalDateTime.parse(date);
+        String s = date.trim();
+        return LocalDateTime.parse(s);
     }
 }
