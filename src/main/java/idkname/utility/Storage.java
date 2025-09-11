@@ -58,7 +58,7 @@ public class Storage {
         try (FileWriter fw = new FileWriter(f)) {
             for (Task t : this.tasks.getTasks()) {
                 String taskType = t.getTaskType();
-                int taskDone = t.getIsMark() ? 1 : 0;
+                int taskDone = t.isDone() ? 1 : 0;
                 String taskDescription = t.getDescription();
                 String textToAdd = String.format("%s | %d | %s",
                         taskType, taskDone, taskDescription);
@@ -66,11 +66,11 @@ public class Storage {
                 switch (taskType) {
                 case "D":
                     LocalDate dueDate = t.getDueDate();
-                    textToAdd += " | " + dueDate;
+                    textToAdd = textToAdd + " | " + dueDate;
                     break;
                 case "E":
                     LocalDateTime[] timePeriod = t.getTimePeriod();
-                    textToAdd += " | " + timePeriod[0] + " | " + timePeriod[1];
+                    textToAdd = textToAdd + " | " + timePeriod[0] + " | " + timePeriod[1];
                     break;
                 default:
                     break;
