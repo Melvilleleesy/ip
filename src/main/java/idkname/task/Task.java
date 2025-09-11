@@ -33,7 +33,6 @@ public abstract class Task implements Comparable<Task> {
      *
      * @return the type code of the task
      */
-
     public abstract String getTaskType();
 
     /**
@@ -61,11 +60,7 @@ public abstract class Task implements Comparable<Task> {
      *
      * @return true if the task is done, false otherwise
      */
-<<<<<<< HEAD
-    public boolean getIsMark() {
-=======
     public boolean isDone() {
->>>>>>> 13cdea0 (Tweak styling in Parser, Task, and Storage)
         return this.isDone;
     }
 
@@ -144,18 +139,13 @@ public abstract class Task implements Comparable<Task> {
         if (!(o instanceof Task)) {
             return false;
         }
-        Task other = (Task) o;
+        Task taskToComparedWith = (Task) o;
 
-        assert this.description != null && other.getDescription() != null
+        assert this.description != null && taskToComparedWith.getDescription() != null
                 : "Tasks compared must have non-null descriptions";
 
-<<<<<<< HEAD
-        return (this.isDone == other.getIsMark())
-                && (description.equals(other.getDescription()));
-=======
-        return (this.isDone == comparedWith.isDone())
-                && (description.equals(comparedWith.getDescription()));
->>>>>>> 13cdea0 (Tweak styling in Parser, Task, and Storage)
+        return (this.isDone == taskToComparedWith.isDone())
+                && (description.equals(taskToComparedWith.getDescription()));
     }
 
     /**
