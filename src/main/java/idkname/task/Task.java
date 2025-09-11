@@ -33,7 +33,6 @@ public abstract class Task implements Comparable<Task> {
      *
      * @return the type code of the task
      */
-
     public abstract String getTaskType();
 
     /**
@@ -61,7 +60,7 @@ public abstract class Task implements Comparable<Task> {
      *
      * @return true if the task is done, false otherwise
      */
-    public boolean getIsMarked() {
+    public boolean isDone() {
         return this.isDone;
     }
 
@@ -88,17 +87,17 @@ public abstract class Task implements Comparable<Task> {
      *  Marks Task done and not print message if not called by the user (load is true)
      *  Prints different message if task already marked as done
      *
-     * @param load the boolean to check if loaded
+     * @param isGettingLoaded the boolean to check if loaded
      */
-    public String markDone(boolean load) {
+    public String markDone(boolean isGettingLoaded) {
         if (this.isDone) {
             return String.format("Task already marked as done: %n%s", this);
         }
         this.isDone = true;
-        if (!load) {
+        if (!isGettingLoaded) {
             return String.format("Nice! I've marked this task as done: %n%s", this);
         }
-        return ""; // marking from load
+        return "";
     }
 
     /**
@@ -120,6 +119,7 @@ public abstract class Task implements Comparable<Task> {
      */
     @Override
     public String toString() {
+        assert description != null : "Task must always have a description";
         return String.format("[%s] %s", this.getStatusIcon(), this.description);
     }
 
@@ -139,13 +139,13 @@ public abstract class Task implements Comparable<Task> {
         if (!(o instanceof Task)) {
             return false;
         }
-        Task other = (Task) o;
+        Task toBeComparedWith = (Task) o;
 
-        assert this.description != null && other.getDescription() != null
+        assert this.description != null && toBeComparedWith.getDescription() != null
                 : "Tasks compared must have non-null descriptions";
 
-        return (this.isDone == other.getIsMarked())
-                && (description.equals(other.getDescription()));
+        return (this.isDone == toBeComparedWith.isDone())
+                && (description.equals(toBeComparedWith.getDescription()));
     }
 
     /**
