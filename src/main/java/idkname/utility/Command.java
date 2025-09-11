@@ -116,7 +116,7 @@ public class Command {
      *
      * @return user-facing error message for unknown commands and a brief hint
      */
-    public String showUnknownCommandError() {
+    private String showUnknownCommandError() {
         return String.format("OOPS!!! I'm sorry, but I don't know what that means :-("
                 + "%nPlease enter with a valid command"
                 + "%n(Eg. todo, deadline, event, find, mark, unmark, list, bye)%n");
@@ -128,17 +128,21 @@ public class Command {
      *
      * @return user-facing error message plus example usages
      */
-    public String showMissingArgumentError() {
+    private String showMissingArgumentError() {
         return String.format("OOPS!!! I'm sorry, but I don't know what that means :-("
-                + "%nPlease enter a valid command and a valid instruction"
+                + "%nPlease enter a valid command and a valid instruction%n%s", this.showHelp());
+    }
+
+    private String showHelp() {
+        return String.format("Try any of these valid instructions!"
                 + "%nEg. usage: "
-                + "%n-list"
-                + "%n-bye"
-                + "%n-mark/unmark task id"
-                + "%n-find description"
-                + "%n-todo description"
-                + "%n-deadline description / yyyy-mm-dd"
-                + "%n-event description / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss");
+                + "%n1) list"
+                + "%n2) bye"
+                + "%n3) mark/unmark task id"
+                + "%n4) find description"
+                + "%n5) todo description"
+                + "%n6) deadline description / yyyy-mm-dd"
+                + "%n7) event description / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss");
     }
 
     /**
@@ -171,6 +175,8 @@ public class Command {
                 out.append("Bye. Hope to see you again soon!\n");
             } else if (command.equals("list")) {
                 out.append(printTaskList(tasks)).append('\n');
+            } else if (command.equals("help")) {
+                out.append(showMissingArgumentError());
             } else if (parts.length > 1) {
                 switch (command) {
                 case "mark" -> out.append(this.tasks.markDoneOrUndone(true, parts[1]));
@@ -195,8 +201,6 @@ public class Command {
         } catch (DateTimeException e) {
             out.append(showDateTimeError());
         }
-
         return out.toString();
     }
-
 }
