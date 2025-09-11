@@ -61,7 +61,11 @@ public abstract class Task implements Comparable<Task> {
      *
      * @return true if the task is done, false otherwise
      */
+<<<<<<< HEAD
     public boolean getIsMark() {
+=======
+    public boolean isDone() {
+>>>>>>> 13cdea0 (Tweak styling in Parser, Task, and Storage)
         return this.isDone;
     }
 
@@ -88,14 +92,14 @@ public abstract class Task implements Comparable<Task> {
      *  Marks Task done and not print message if not called by the user (load is true)
      *  Prints different message if task already marked as done
      *
-     * @param load the boolean to check if loaded
+     * @param gettingLoaded the boolean to check if loaded
      */
-    public String markDone(boolean load) {
+    public String markDone(boolean gettingLoaded) {
         if (this.isDone) {
             return String.format("Task already marked as done: %n%s", this);
         }
         this.isDone = true;
-        if (!load) {
+        if (!gettingLoaded) {
             return String.format("Nice! I've marked this task as done: %n%s", this);
         }
         return ""; // marking from load
@@ -145,8 +149,13 @@ public abstract class Task implements Comparable<Task> {
         assert this.description != null && other.getDescription() != null
                 : "Tasks compared must have non-null descriptions";
 
+<<<<<<< HEAD
         return (this.isDone == other.getIsMark())
                 && (description.equals(other.getDescription()));
+=======
+        return (this.isDone == comparedWith.isDone())
+                && (description.equals(comparedWith.getDescription()));
+>>>>>>> 13cdea0 (Tweak styling in Parser, Task, and Storage)
     }
 
     /**

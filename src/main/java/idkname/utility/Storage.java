@@ -58,7 +58,11 @@ public class Storage {
         try (FileWriter fw = new FileWriter(f)) {
             for (Task t : this.tasks.getTasks()) {
                 String taskType = t.getTaskType();
+<<<<<<< HEAD
                 int taskDone = t.getIsMark() ? 1 : 0;
+=======
+                int taskDone = t.isDone() ? 1 : 0;
+>>>>>>> 13cdea0 (Tweak styling in Parser, Task, and Storage)
                 String taskDescription = t.getDescription();
                 String textToAdd = String.format("%s | %d | %s",
                         taskType, taskDone, taskDescription);
