@@ -125,16 +125,40 @@ public class Command {
                 + "%nPlease enter a valid command and a valid instruction%n%s", this.showHelp());
     }
 
+    /**
+     * Provides a help message listing all supported user commands and their usage.
+     * <p>
+     * The help message includes examples of how to use each command:
+     * <ul>
+     *   <li><code>list</code> — display all tasks</li>
+     *   <li><code>bye</code> — exit the program</li>
+     *   <li><code>sort</code> — sort all tasks by type</li>
+     *   <li><code>mark &lt;id&gt;</code>/<code>unmark &lt;id&gt;</code> — mark or unmark a task by ID</li>
+     *   <li><code>find &lt;keyword&gt;</code> — search for tasks containing a keyword</li>
+     *   <li><code>todo &lt;description&gt;</code> — add a todo task</li>
+     *   <li><code>deadline &lt;description&gt; / yyyy-MM-dd</code> — add a deadline task with a due date</li>
+     *   <li><code>event &lt;description&gt; / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss</code>
+     *       — add an event task with start and end times</li>
+     *   <li><code>sort &lt;taskType&gt;</code> — sort and display tasks filtered by type
+     *       (e.g., <code>sort deadline</code>)</li>
+     *   <li><code>help</code> — display this help message</li>
+     * </ul>
+     *
+     * @return a formatted string containing the list of valid instructions and usage examples
+     */
     private String showHelp() {
         return String.format("Try any of these valid instructions!"
                 + "%nEg. usage: "
                 + "%n1) list"
                 + "%n2) bye"
-                + "%n3) mark/unmark task id"
-                + "%n4) find description"
-                + "%n5) todo description"
-                + "%n6) deadline description/%nyyyy-mm-dd"
-                + "%n7) event description/%nyyyy-MM-dd'T'HH:mm:ss/%nyyyy-MM-dd'T'HH:mm:ss");
+                + "%n3) sort"
+                + "%n4) mark/unmark task id"
+                + "%n5) find description"
+                + "%n6) todo description"
+                + "%n7) deadline description/%nyyyy-mm-dd"
+                + "%n8) event description/%nyyyy-MM-dd'T'HH:mm:ss/%nyyyy-MM-dd'T'HH:mm:ss"
+                + "%n9) sort <taskType> eg. sort deadline"
+                + "%n10) help");
     }
 
     /**
@@ -150,11 +174,14 @@ public class Command {
      *   <li><code>todo &lt;description&gt;</code> — add a todo task</li>
      *   <li><code>deadline &lt;description&gt; /by yyyy-MM-dd</code> — add a deadline task</li>
      *   <li><code>event &lt;description&gt; /from yyyy-MM-ddTHH:mm:ss /to yyyy-MM-ddTHH:mm:ss</code>
-     *   <li><code>find &lt;description&gt;</code></li>
-     *   — add an event task</li>
+     *       — add an event task</li>
+     *   <li><code>find &lt;keyword&gt;</code> — search for tasks matching a keyword</li>
+     *   <li><code>sort</code> — sort all tasks by type (todo, deadline, event)</li>
+     *   <li><code>sort &lt;todo|deadline|event&gt;</code> — sort and display tasks filtered by type</li>
      * </ul>
      * Handles invalid commands and errors gracefully by showing appropriate error messages.
      */
+
     public String getResponse(String userInput) {
         String[] parts = Parser.ordinaryParse(userInput);
         assert parts.length > 0 : "Parser should never return blank string";
