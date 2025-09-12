@@ -87,13 +87,13 @@ public class Parser {
             return null;
         }
 
-        String[] left = s.split("\\s*/from\\s*", 2);
+        String[] left = s.split("\\s*/\\s*", 2);
         if (left.length != 2) {
             return null;
         }
 
         String desc = left[0].trim();
-        String[] right = left[1].split("\\s*/to\\s*", 2);
+        String[] right = left[1].split("\\s*/\\s*", 2);
         if (right.length != 2) {
             return null;
         }
