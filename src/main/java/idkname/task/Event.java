@@ -53,7 +53,7 @@ public class Event extends Task {
     public String toString() {
         String startDate = this.start.format(DateTimeFormatter.ofPattern("MMM d yyyy HHmm"));
         String endDate = this.end.format(DateTimeFormatter.ofPattern("MMM d yyyy HHmm"));
-        return String.format("[E]%s (from: %s to: %s)", super.toString(), startDate, endDate);
+        return String.format("(E)%s (from: %s to: %s)", super.toString(), startDate, endDate);
     }
 
     /**

@@ -1,6 +1,6 @@
 package idkname.utility;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,13 +8,13 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import idkname.task.Deadline;
-import idkname.task.Event;
-import idkname.task.Todo;
-import idkname.task.Task;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import idkname.task.Deadline;
+import idkname.task.Event;
+import idkname.task.Task;
+import idkname.task.Todo;
 
 class StorageTest {
 
@@ -22,7 +22,7 @@ class StorageTest {
     Path tempDir;
 
     @Test
-    void saveThenLoad_roundTrip_preservesTasks() throws IOException {
+    void saveThenLoadRoundTripPreservesTasks() throws IOException {
         // Arrange: build a list with T, D, E
         TaskList original = new TaskList();
         original.add(new Todo("buy milk"));
@@ -52,15 +52,15 @@ class StorageTest {
     }
 
     @Test
-    void load_ignoresMalformedLines_keepsGoodOnes() throws IOException {
+    void loadIgnoresMalformedLines_keepsGoodOnes() throws IOException {
         File file = tempDir.resolve("IDKName.txt").toFile();
 
         // Write one good Todo, one malformed line, one good Deadline, one malformed Event
         String content = String.join(System.lineSeparator(),
                 "T | 0 | buy milk",
-                "X | ??? | nonsense",                       // malformed
+                "X | ??? | nonsense",
                 "D | 1 | submit report | 2025-12-12",
-                "E | 0 | meeting | 2025-10-01T10:00"        // missing end -> malformed
+                "E | 0 | meeting | 2025-10-01T10:00"
         ) + System.lineSeparator();
 
         java.nio.file.Files.writeString(file.toPath(), content);

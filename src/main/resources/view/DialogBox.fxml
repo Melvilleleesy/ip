@@ -2,19 +2,24 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<fx:root alignment="TOP_RIGHT"
-         maxHeight="1.7976931348623157E308"
-         maxWidth="1.7976931348623157E308"
-         prefWidth="400.0"
-         type="javafx.scene.layout.HBox"
-         xmlns="http://javafx.com/javafx/17"
-         xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="400.0" spacing="10.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="dialog" text="Label" wrapText="true" minHeight="-Infinity"/>
-        <ImageView fx:id="displayPicture" fitHeight="99.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true" />
+        <Label fx:id="dialog" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefWidth="360.0" style="-fx-font-family: &quot;Pokémon FireRed &amp; LeafGreen Font Recreation&quot;;" styleClass="chat-input" stylesheets="@../styles.css" text="Label" textFill="#2b4cc8" textOverrun="CLIP" wrapText="true" HBox.hgrow="ALWAYS">
+         <padding>
+            <Insets bottom="2.0" left="7.0" right="7.0" top="2.0" />
+         </padding>
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+        <ImageView fx:id="displayPicture" fitHeight="60.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/player.png" />
+         </image></ImageView>
     </children>
     <padding>
         <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />

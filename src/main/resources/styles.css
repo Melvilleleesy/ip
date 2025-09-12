@@ -1,0 +1,54 @@
+/* this hits all text fields */
+.text-field { 
+    -fx-background-color: white;
+    -fx-background-insets: 3;      /* pushes fill inward by border width */
+    -fx-background-radius: 5;      /* round corners of the fill */
+
+    -fx-border-color: #9c6;
+    -fx-border-radius: 8;
+    -fx-border-width: 3;
+    -fx-font-family: "Pokémon FireRed & LeafGreen Font Recreation";
+    -fx-font-size: 14px;
+}
+
+/* this hits only the one you tagged with Style Class = chat-input */
+.chat-input {
+    /* Top fill layer (light gray) */
+    -fx-background-color: #f8f8f8, transparent;
+    -fx-background-insets: 2.5, 0;          /* first layer inset by border */
+    -fx-background-radius: 3, 0;            /* round the fill corners */
+
+    /* Bottom image layer (bg.png) */
+    -fx-background-image: none, url("images/bg.png");
+    -fx-background-repeat: no-repeat, repeat;
+    -fx-background-position: center, center;
+    -fx-background-size: auto, auto;
+
+    /* Border on top */
+    -fx-border-color: #a1d0e0;
+    -fx-border-width: 2.5;
+    -fx-border-radius: 5;
+
+    -fx-font-family: "Pokémon FireRed & LeafGreen Font Recreation";
+    -fx-font-size: 14px;
+}
+
+
+.chat-background {
+    -fx-background-color: transparent;
+    -fx-background-image: url("images/bg.png");
+    -fx-background-repeat: repeat;   /* tile the image */
+    -fx-background-size: auto;       /* use the image's actual size */
+    -fx-background-position: top left;
+}
+
+.chat-background .viewport {
+    -fx-background-color: transparent; /* let the image show through */
+}
+
+.image-view {
+    -fx-fit-width: 40;
+    -fx-fit-height: 40;
+}
+
+
