@@ -81,7 +81,7 @@ class ParserTest {
     @Test
     void eventParseHappyPath() {
         String[] parts = Parser.eventParse(
-                "meeting /from 2025-10-01T10:00 /to 2025-10-01T11:00");
+                "meeting / 2025-10-01T10:00 / 2025-10-01T11:00");
         assertArrayEquals(
                 new String[] {"meeting", "2025-10-01T10:00", "2025-10-01T11:00"},
                 parts);
@@ -95,16 +95,16 @@ class ParserTest {
     @Test
     void eventParseWithSecondsOk() {
         String[] parts = Parser.eventParse(
-                "shift /from 2025-10-01T10:00:05 /to 2025-10-01T12:30:00");
+                "shift / 2025-10-01T10:00:05 / 2025-10-01T12:30:00");
         assertNotNull(parts);
         assertEquals("shift", parts[0]);
     }
 
     @Test
     void eventParseWrongShapeReturnsNull() {
-        assertNull(Parser.eventParse("meeting /from 2025-10-01T10:00"));
-        assertNull(Parser.eventParse("meeting /to 2025-10-01T11:00"));
-        assertNull(Parser.eventParse("meeting /from X /to 2025-10-01T11:00"));
+        assertNull(Parser.eventParse("meeting / 2025-10-01T10:00"));
+        assertNull(Parser.eventParse("meeting / 2025-10-01T11:00"));
+        assertNull(Parser.eventParse("meeting / X / 2025-10-01T11:00"));
         assertNull(Parser.eventParse("  "));
     }
 

@@ -1,13 +1,7 @@
 # IDKName
 
----
-## 🤖 Chatbot Overview
-
-- IDKName Chatbot is a JavaFX desktop app for managing tasks with simple commands.
-
-- It features a retro game-inspired interface and a task manager backend.
-
-- Users type commands in the input box, and the bot replies in the main chat area with feedback, errors, or the task list.
+A greenfield Java project template named after the Java mascot **Duke**.  
+This project was bootstrapped to provide a clean starting point for building Java applications with proper structure, tests, and style guidelines.
 
 ---
 
@@ -43,6 +37,16 @@
 
 If setup is correct, you can move on to the chatbot!
 
+---
+## 🤖 Chatbot Overview
+
+- IDKName Chatbot is a JavaFX desktop app for managing tasks with simple commands.
+
+- It features a retro game-inspired interface and a task manager backend.
+
+- Users type commands in the input box, and the bot replies in the main chat area with feedback, errors, or the task list.
+---
+
 
 ## 📖 Command Descriptions
 ```
@@ -70,13 +74,7 @@ Creates a deadline task with the given description and a due date.
 8. event <description> / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss
 Creates an event task scheduled between a start and end date/time
 
-9. sort
-Sorts all tasks in the list by type (Todos, Deadlines, Events).
-
-10. sort <event, deadline, todo>
-Sorts and displays tasks filtered by the given type.
-
-11. help
+9. help
 If you need any help for the instructions!
 ```
 - Eg. Usage
@@ -90,7 +88,7 @@ If you need any help for the instructions!
 
 This project uses **Gradle** as its build tool.
 
-- To build:
+- To build: 
     ```bash
     ./gradlew build
 
