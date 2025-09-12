@@ -19,7 +19,9 @@ public class Parser {
     public static String[] ordinaryParse(String input) {
         assert input != null : "input must not be null";
         String trimmed = input.trim();
-        if (trimmed.isEmpty()) return new String[] { "" };
+        if (trimmed.isEmpty()) {
+            return new String[] { "" };
+        }
         return trimmed.split("\\s+", 2);
     }
 
@@ -51,14 +53,20 @@ public class Parser {
     public static String[] deadlineParse(String description) {
         assert description != null : "description must not be null";
         String s = description.trim();
-        if (s.isEmpty()) return null;
+        if (s.isEmpty()) {
+            return null;
+        }
 
-        String[] parts = s.split("\\s*/by\\s*", 2);
-        if (parts.length != 2) return null;
+        String[] parts = s.split("\\s*/\\s*", 2);
+        if (parts.length != 2) {
+            return null;
+        }
 
         String desc = parts[0].trim();
-        String by   = parts[1].trim();
-        if (desc.isEmpty() || by.isEmpty()) return null;
+        String by = parts[1].trim();
+        if (desc.isEmpty() || by.isEmpty()) {
+            return null;
+        }
 
         return new String[] { desc, by };
     }
@@ -75,7 +83,9 @@ public class Parser {
     public static String[] eventParse(String description) {
         assert description != null : "description must not be null";
         String s = description.trim();
-        if (s.isEmpty()) return null;
+        if (s.isEmpty()) {
+            return null;
+        }
 
         String[] left = s.split("\\s*/from\\s*", 2);
         if (left.length != 2) {
@@ -90,7 +100,9 @@ public class Parser {
 
         String start = right[0].trim();
         String end = right[1].trim();
-        if (desc.isEmpty() || start.isEmpty() || end.isEmpty()) return null;
+        if (desc.isEmpty() || start.isEmpty() || end.isEmpty()) {
+            return null;
+        }
 
         try {
             LocalDateTime.parse(start);

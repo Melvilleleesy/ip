@@ -95,10 +95,14 @@ public class Storage {
         try (Scanner s = new Scanner(f)) {
             while (s.hasNextLine()) {
                 String line = s.nextLine().trim();
-                if (line.isEmpty()) continue;
+                if (line.isEmpty()) {
+                    continue;
+                }
 
                 String[] parts = line.split("\\s*\\|\\s*", 5);
-                if (parts.length < 3) continue;
+                if (parts.length < 3) {
+                    continue;
+                }
 
                 String taskType = parts[0].trim(); // "T","D","E"
                 String taskDone = parts[1].trim(); // "0" or "1"
@@ -108,7 +112,9 @@ public class Storage {
                 switch (taskType) {
                 case "T" -> t = new Todo(desc);
                 case "D" -> {
-                    if (parts.length < 4) continue;
+                    if (parts.length < 4) {
+                        continue;
+                    }
                     try {
                         LocalDate due = Parser.localDateParse(parts[3].trim());
                         t = new Deadline(desc, due);
@@ -117,16 +123,20 @@ public class Storage {
                     }
                 }
                 case "E" -> {
-                    if (parts.length < 5) continue;
+                    if (parts.length < 5) {
+                        continue;
+                    }
                     try {
                         LocalDateTime start = Parser.localDateTimeParse(parts[3].trim());
-                        LocalDateTime end   = Parser.localDateTimeParse(parts[4].trim());
+                        LocalDateTime end = Parser.localDateTimeParse(parts[4].trim());
                         t = new Event(desc, start, end);
                     } catch (Exception ex) {
                         continue;
                     }
                 }
-                default -> { continue; }
+                default -> {
+                    continue;
+                }
                 }
 
                 if ("1".equals(taskDone)) {

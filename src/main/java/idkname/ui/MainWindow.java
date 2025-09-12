@@ -1,5 +1,7 @@
 package idkname.ui;
 
+import java.io.IOException;
+
 import idkname.main.IdKName;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
 /**
  * Controller for the main GUI.
@@ -60,7 +61,9 @@ public class MainWindow extends AnchorPane {
         assert dialogContainer != null : "dialogContainer not available";
 
         String input = userInput.getText();
-        if (input == null || input.isBlank()) return;
+        if (input == null || input.isBlank()) {
+            return;
+        }
         String response = duke.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
@@ -70,7 +73,7 @@ public class MainWindow extends AnchorPane {
         if (input.trim().equalsIgnoreCase("bye")) {
             // Save before closing
             try {
-                duke.persistOnExit();  // Save the data
+                duke.persistOnExit(); // Save the data
             } catch (IOException e) {
                 dialogContainer.getChildren().add(
                         DialogBox.getDukeDialog("Error saving: " + e.getMessage(), dukeImage)
