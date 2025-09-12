@@ -50,7 +50,7 @@ class TaskListTest {
     @Test
     void addByTypeEventValid() {
         TaskList tl = new TaskList();
-        String msg = tl.add("event", "meeting /from 2025-10-01T10:00 /to 2025-10-01T11:00");
+        String msg = tl.add("event", "meeting / 2025-10-01T10:00 / 2025-10-01T11:00");
         assertTrue(msg.contains("I've added this task"));
         assertEquals("E", tl.getTasks().get(0).getTaskType());
     }
