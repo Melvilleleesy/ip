@@ -74,7 +74,13 @@ Creates a deadline task with the given description and a due date.
 8. event <description> / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss
 Creates an event task scheduled between a start and end date/time
 
-9. help
+9. sort
+Sorts all tasks in the list by type (Todos, Deadlines, Events).
+
+10. sort <event, deadline, todo>
+Sorts and displays tasks filtered by the given type.
+
+11. help
 If you need any help for the instructions!
 ```
 - Eg. Usage
