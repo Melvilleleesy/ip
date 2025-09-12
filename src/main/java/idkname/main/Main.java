@@ -1,12 +1,14 @@
 package idkname.main;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import idkname.ui.MainWindow;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import idkname.ui.MainWindow;
@@ -34,13 +36,21 @@ public class Main extends Application {
         assert stage != null : "Stage must not be null";
 
         try {
+            // Register the font
+            Font.loadFont(
+                    getClass().getResourceAsStream("/fonts/Pokemon_FireRedLeafGreen.ttf"),
+                    14
+            );
+
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             assert ap != null : "Root AnchorPane should be loaded";
 
             Scene scene = new Scene(ap);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass()
+                    .getResource("/styles.css")).toExternalForm());
             stage.setScene(scene);
-
+            stage.setTitle("IdKName");
             MainWindow controller = fxmlLoader.<MainWindow>getController();
             assert controller != null : "MainWindow controller not injected by FXML";
             controller.setDuke(chatbot);

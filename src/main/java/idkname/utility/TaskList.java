@@ -170,10 +170,12 @@ public class TaskList implements Iterable<Task> {
 
         String taskType;
         switch (description.trim().toLowerCase()) {
-            case "todo"     -> taskType = "T";
-            case "deadline" -> taskType = "D";
-            case "event"    -> taskType = "E";
-            default         -> { return new TaskList(); }
+        case "todo" -> taskType = "T";
+        case "deadline" -> taskType = "D";
+        case "event" -> taskType = "E";
+        default -> {
+            return new TaskList();
+        }
         }
 
         TaskList sortedTaskList = new TaskList();

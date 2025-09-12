@@ -47,8 +47,8 @@ public class Command {
      */
     public String showDateTimeError() {
         return String.format("Invalid date format.Please enter as:"
-                + "%n-deadline description/yyyy-MM-dd"
-                + "%n-event description/yyyy-MM-ddTHH:mm:ss/yyyy-MM-ddTHH:mm:ss");
+                + "%n-deadline description/%nyyyy-MM-dd"
+                + "%n-event description/%nyyyy-MM-ddTHH:mm:ss/%nyyyy-MM-ddTHH:mm:ss");
     }
 
     /**
@@ -133,8 +133,8 @@ public class Command {
                 + "%n3) mark/unmark task id"
                 + "%n4) find description"
                 + "%n5) todo description"
-                + "%n6) deadline description / yyyy-mm-dd"
-                + "%n7) event description / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss");
+                + "%n6) deadline description/%nyyyy-mm-dd"
+                + "%n7) event description/%nyyyy-MM-dd'T'HH:mm:ss/%nyyyy-MM-dd'T'HH:mm:ss");
     }
 
     /**
@@ -168,7 +168,7 @@ public class Command {
             } else if (command.equals("list")) {
                 out.append(printTaskList(tasks)).append('\n');
             } else if (command.equals("help")) {
-                out.append(showMissingArgumentError());
+                out.append(showHelp());
             } else if (parts.length > 1) {
                 switch (command) {
                 case "mark" -> out.append(this.tasks.markDoneOrUndone(true, parts[1]));
