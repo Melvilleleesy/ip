@@ -33,42 +33,25 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) {
-        assert stage != null : "Stage must not be null";
-
         try {
-            // Register the font
-            Font.loadFont(
-                    getClass().getResourceAsStream("/fonts/Pokemon_FireRedLeafGreen.ttf"),
-                    14
-            );
+            Font.loadFont(getClass().getResourceAsStream("/fonts/Pokemon_FireRedLeafGreen.ttf"), 14);
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
 
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
-            AnchorPane ap = fxmlLoader.load();
-            assert ap != null : "Root AnchorPane should be loaded";
-
-            Scene scene = new Scene(ap);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass()
-                    .getResource("/styles.css")).toExternalForm());
             stage.setScene(scene);
             stage.setTitle("IdKName");
-            MainWindow controller = fxmlLoader.<MainWindow>getController();
-            assert controller != null : "MainWindow controller not injected by FXML";
+            MainWindow controller = loader.getController();
             controller.setDuke(chatbot);
 
-            stage.setOnShown(e -> {
-                controller.appendBot((chatbot.getGreeting() != null)
-                        ? chatbot.getGreeting()
-                        : "Hello! I'm IdKName\nWhat can I do for you?"
-                );
-            });
+            stage.setOnShown(e -> controller.appendBot(Objects
+                    .requireNonNullElse(chatbot.getGreeting(), "Hello! I'm IdKName\nWhat can I do for you!")
+            ));
 
-            // add: on close, append goodbye and persist safely
             stage.setOnCloseRequest(e -> {
                 try {
-                    controller.appendBot((chatbot.getGoodbye() != null)
-                            ? chatbot.getGoodbye()
-                            : "Bye. Hope to see you again soon!"
-                    );
+                    controller.appendBot(Objects.requireNonNullElse(chatbot.getGoodbye(),
+                            "Bye. Hope to see you again soon!"));
                     chatbot.persistOnExit();
                 } catch (Exception ex) {
                     controller.appendBot("Error saving: " + ex.getMessage());
