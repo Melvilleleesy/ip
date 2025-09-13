@@ -36,7 +36,7 @@ public class Storage {
     }
 
     /**
-     * Saves the current tasks to the storage file (data/IDKName.txt).
+     * Saves the current tasks to the storage file.
      * Creates parent directories if they do not exist.
      * <p>
      * Tasks are serialized in the following formats:
@@ -103,47 +103,31 @@ public class Storage {
                 if (parts.length < 3) {
                     continue;
                 }
-
-                String taskType = parts[0].trim(); // "T","D","E"
                 String taskDone = parts[1].trim(); // "0" or "1"
-                String desc = parts[2].trim();
-
-                Task t;
-                switch (taskType) {
-                case "T" -> t = new Todo(desc);
-                case "D" -> {
-                    if (parts.length < 4) {
-                        continue;
+                Task t = createTask(parts);
+                if (t != null) {
+                    if (taskDone.equals("1")) {
+                        t.markDone(true);
                     }
-                    try {
-                        LocalDate due = Parser.localDateParse(parts[3].trim());
-                        t = new Deadline(desc, due);
-                    } catch (Exception ex) {
-                        continue;
-                    }
-                }
-                case "E" -> {
-                    if (parts.length < 5) {
-                        continue;
-                    }
-                    try {
-                        LocalDateTime start = Parser.localDateTimeParse(parts[3].trim());
-                        LocalDateTime end = Parser.localDateTimeParse(parts[4].trim());
-                        t = new Event(desc, start, end);
-                    } catch (Exception ex) {
-                        continue;
-                    }
-                }
-                default -> {
-                    continue;
-                }
-                }
-
-                if ("1".equals(taskDone)) {
-                    t.markDone(true); // true implies that this comes from loading so no printed message
                 }
                 this.tasks.add(t);
             }
+        }
+    }
+
+    private Task createTask(String[] parts) {
+        String taskType = parts[0].trim(); // "T","D","E"
+        String desc = parts[2].trim();
+        try {
+            return switch (taskType) {
+                case "T" -> new Todo(desc);
+                case "D" -> parts.length >= 4 ? new Deadline(desc, Parser.localDateParse(parts[3].trim())) : null;
+                case "E" -> parts.length >= 5 ? new Event(desc, Parser.localDateTimeParse(parts[3].trim()),
+                        Parser.localDateTimeParse(parts[4].trim())) : null;
+                default -> null;
+            };
+        } catch (Exception e) {
+            return null;
         }
     }
 }
