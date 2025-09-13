@@ -1,7 +1,13 @@
 # IDKName
 
-A greenfield Java project template named after the Java mascot **Duke**.  
-This project was bootstrapped to provide a clean starting point for building Java applications with proper structure, tests, and style guidelines.
+---
+## 🤖 Chatbot Overview
+
+- IDKName Chatbot is a JavaFX desktop app for managing tasks with simple commands.
+
+- It features a retro game-inspired interface and a task manager backend.
+
+- Users type commands in the input box, and the bot replies in the main chat area with feedback, errors, or the task list.
 
 ---
 
@@ -36,16 +42,6 @@ This project was bootstrapped to provide a clean starting point for building Jav
     - Right-click it and choose **Run 'IDKName.main()'**.
 
 If setup is correct, you can move on to the chatbot!
-
----
-## 🤖 Chatbot Overview
-
-- IDKName Chatbot is a JavaFX desktop app for managing tasks with simple commands.
-
-- It features a retro game-inspired interface and a task manager backend.
-
-- Users type commands in the input box, and the bot replies in the main chat area with feedback, errors, or the task list.
----
 
 
 ## 📖 Command Descriptions
