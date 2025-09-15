@@ -122,7 +122,8 @@ public class Command {
      */
     private String showMissingArgumentError() {
         return String.format("OOPS!!! I'm sorry, but I don't know what that means :-("
-                + "%nPlease enter a valid command and a valid instruction%n%s", this.showHelp());
+                + "%nPlease enter a valid command and a valid instruction"
+                + "%nTry typing \"help\" to find out what are valid instructions!");
     }
 
     /**
@@ -157,7 +158,7 @@ public class Command {
                 + "%n6) todo description"
                 + "%n7) deadline description/%nyyyy-mm-dd"
                 + "%n8) event description/%nyyyy-MM-dd'T'HH:mm:ss/%nyyyy-MM-dd'T'HH:mm:ss"
-                + "%n9) sort <taskType> eg. sort deadline"
+                + "%n9) sort tasktype"
                 + "%n10) help");
     }
 
