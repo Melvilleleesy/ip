@@ -109,8 +109,8 @@ public class Storage {
                     if (taskDone.equals("1")) {
                         t.markDone(true);
                     }
+                    this.tasks.add(t);
                 }
-                this.tasks.add(t);
             }
         }
     }
@@ -120,11 +120,11 @@ public class Storage {
         String desc = parts[2].trim();
         try {
             return switch (taskType) {
-                case "T" -> new Todo(desc);
-                case "D" -> parts.length >= 4 ? new Deadline(desc, Parser.localDateParse(parts[3].trim())) : null;
-                case "E" -> parts.length >= 5 ? new Event(desc, Parser.localDateTimeParse(parts[3].trim()),
-                        Parser.localDateTimeParse(parts[4].trim())) : null;
-                default -> null;
+            case "T" -> new Todo(desc);
+            case "D" -> parts.length >= 4 ? new Deadline(desc, Parser.localDateParse(parts[3].trim())) : null;
+            case "E" -> parts.length >= 5 ? new Event(desc, Parser.localDateTimeParse(parts[3].trim()),
+                    Parser.localDateTimeParse(parts[4].trim())) : null;
+            default -> null;
             };
         } catch (Exception e) {
             return null;

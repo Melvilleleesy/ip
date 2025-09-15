@@ -52,9 +52,8 @@ class StorageTest {
     }
 
     @Test
-    void loadIgnoresMalformedLines_keepsGoodOnes() throws IOException {
+    void loadIgnoresMalformedLinesKeepsGoodOnes() throws IOException {
         File file = tempDir.resolve("IDKName.txt").toFile();
-
         // Write one good Todo, one malformed line, one good Deadline, one malformed Event
         String content = String.join(System.lineSeparator(),
                 "T | 0 | buy milk",
