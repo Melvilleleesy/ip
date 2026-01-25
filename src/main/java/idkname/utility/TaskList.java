@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
 import idkname.task.Deadline;
 import idkname.task.Event;
 import idkname.task.Task;
@@ -133,6 +132,23 @@ public class TaskList implements Iterable<Task> {
         } else {
             t.markUndone();
         }
+    }
+
+    /**
+     * Searches the list for similar descriptions
+     *
+     * @param description description to be searched
+     * @return tasklist of all tasks with similar description
+     */
+    public TaskList find(String description) {
+        TaskList taskList = new TaskList();
+        for (Task t : this.tasks) {
+            String tDescription = t.getDescription();
+            if (tDescription.toLowerCase().contains(description.toLowerCase())) {
+                taskList.add(t);
+            }
+        }
+        return taskList;
     }
 
     /**

@@ -49,11 +49,7 @@ public class Ui {
     /**
      * Displays an error message if task data cannot be saved to disk.
      */
-<<<<<<< HEAD
-    public void showIOError() {
-=======
     public void showIoError() {
->>>>>>> origin/branch-A-CodingStandard
         System.out.printf("Unable to save data.%n%s%n", this.line);
     }
 
@@ -72,6 +68,17 @@ public class Ui {
     public void showNumberFormatError() {
         System.out.printf("Please enter a valid command:"
                 + "%n[command] [task number]%n%s%n", this.line);
+    }
+
+    /**
+     * Iterates and prints the list of tasks
+     *
+     * @param taskList list of tasks to be printed
+     */
+    public void printTaskList(TaskList taskList) {
+        for (int i = 0; i < taskList.getTasks().size(); i++) {
+            System.out.printf("%d. %s%n", i + 1, this.tasks.get(i).toString());
+        }
     }
 
     /**
@@ -104,12 +111,9 @@ public class Ui {
      *   <li><code>delete &lt;id&gt;</code> — delete a task</li>
      *   <li><code>todo &lt;description&gt;</code> — add a todo task</li>
      *   <li><code>deadline &lt;description&gt; /by yyyy-MM-dd</code> — add a deadline task</li>
-<<<<<<< HEAD
-     *   <li><code>event &lt;description&gt; /from yyyy-MM-ddTHH:mm:ss /to yyyy-MM-ddTHH:mm:ss</code> — add an event task</li>
-=======
      *   <li><code>event &lt;description&gt; /from yyyy-MM-ddTHH:mm:ss /to yyyy-MM-ddTHH:mm:ss</code>
+     *   <li><code>find &lt;description&gt;</code></li>
      *   — add an event task</li>
->>>>>>> origin/branch-A-CodingStandard
      * </ul>
      * Handles invalid commands and errors gracefully by showing appropriate error messages.
      */
@@ -127,9 +131,7 @@ public class Ui {
                 if (commandLowerCase.equals("bye")) {
                     break;
                 } else if (commandLowerCase.equals("list")) {
-                    for (int i = 0; i < this.tasks.getTasks().size(); i++) {
-                        System.out.printf("%d. %s%n", i + 1, this.tasks.get(i).toString());
-                    }
+                    printTaskList(this.tasks);
                     System.out.println(this.line);
                 } else if (parts.length > 1) {
                     switch (commandLowerCase) {
@@ -139,9 +141,10 @@ public class Ui {
                     case "todo" -> this.tasks.add("todo", parts[1]);
                     case "deadline" -> this.tasks.add("deadline", parts[1]);
                     case "event" -> this.tasks.add("event", parts[1]);
+                    case "find" -> printTaskList(this.tasks.find(parts[1]));
                     default -> System.out.printf("OOPS!!! I'm sorry, but I don't know what that means :-("
                             + "%nPlease enter with a valid command"
-                            + "%n(Eg. todo, deadline, event, list, bye)%n");
+                            + "%n(Eg. todo, deadline, event, find, mark, unmark, list, bye)%n");
                     }
                     System.out.println(this.line);
                 } else {
@@ -151,6 +154,7 @@ public class Ui {
                             + "%n-list"
                             + "%n-bye"
                             + "%n-mark/unmark task id"
+                            + "%n-find description"
                             + "%n-todo description"
                             + "%n-deadline description / yyyy-mm-dd"
                             + "%n-event description / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss%n%s%n", this.line);
