@@ -1,16 +1,19 @@
 package idkname.utility;
 
-import idkname.task.Deadline;
-import idkname.task.Event;
-import idkname.task.Task;
-import idkname.task.Todo;
-
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+<<<<<<< HEAD
+=======
+import idkname.task.Deadline;
+import idkname.task.Event;
+import idkname.task.Task;
+import idkname.task.Todo;
+
+>>>>>>> origin/branch-A-CodingStandard
 /**
  * Represents a list of tasks.
  * Provides operations to add, delete, retrieve, and update tasks.
@@ -63,9 +66,9 @@ public class TaskList implements Iterable<Task> {
         default:
             break;
         }
-        System.out.printf("Got it. I've added this task:" +
-                        "%n %s" +
-                        "%nNow you have %d tasks in the list.%n",
+        System.out.printf("Got it. I've added this task:"
+                        + "%n %s"
+                        + "%nNow you have %d tasks in the list.%n",
                 t, this.tasks.size()); // t will never be null as we check if type and item exist
 
     }
@@ -87,11 +90,11 @@ public class TaskList implements Iterable<Task> {
      * @throws IndexOutOfBoundsException if the task number does not exist in the list
      */
     public void delete(String taskNumber) {
-        int task_Id = Parser.getTaskId(taskNumber); // may throw NumberFormatException
-        Task t = this.tasks.get(task_Id);
+        int taskId = Parser.getTaskId(taskNumber); // may throw NumberFormatException
+        Task t = this.tasks.get(taskId);
         System.out.print("Noted. I've removed this task:");
         System.out.println(t.toString());
-        this.tasks.remove(task_Id);
+        this.tasks.remove(taskId);
         System.out.printf("Now you have %d tasks in the list.%n",
                 this.tasks.size());
     }
@@ -125,8 +128,8 @@ public class TaskList implements Iterable<Task> {
      * @throws IndexOutOfBoundsException if the task number does not exist in the list
      */
     public void markDoneOrUndone(boolean b, String taskNumber) {
-        int task_Id = Parser.getTaskId(taskNumber); // may throw NumberFormatException
-        Task t = this.tasks.get(task_Id);
+        int taskId = Parser.getTaskId(taskNumber); // may throw NumberFormatException
+        Task t = this.tasks.get(taskId);
         if (b) {
             t.markDone(false);
         } else {

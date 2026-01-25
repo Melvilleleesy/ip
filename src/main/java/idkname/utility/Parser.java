@@ -28,7 +28,7 @@ public class Parser {
      * @throws NumberFormatException if the task number is not a valid integer
      */
     public static int getTaskId(String taskNumber) {
-        return  Integer.parseInt(taskNumber) - 1;
+        return Integer.parseInt(taskNumber) - 1;
     }
 
     /**

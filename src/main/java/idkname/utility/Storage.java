@@ -1,10 +1,5 @@
 package idkname.utility;
 
-import idkname.task.Deadline;
-import idkname.task.Event;
-import idkname.task.Task;
-import idkname.task.Todo;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -13,6 +8,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+<<<<<<< HEAD
+=======
+import idkname.task.Deadline;
+import idkname.task.Event;
+import idkname.task.Task;
+import idkname.task.Todo;
+
+>>>>>>> origin/branch-A-CodingStandard
 /**
  * Handles reading from and writing to a persistent storage file
  * that contains the user's task list.
@@ -98,10 +101,14 @@ public class Storage {
         try (Scanner s = new Scanner(f)) {
             while (s.hasNextLine()) {
                 String line = s.nextLine().trim();
-                if (line.isEmpty()) continue;
+                if (line.isEmpty()) {
+                    continue;
+                }
 
                 String[] parts = line.split("\\s*\\|\\s*", 5);
-                if (parts.length < 3) continue;
+                if (parts.length < 3) {
+                    continue;
+                }
 
                 // will always have 3 parts as that's the basic necessity to create a task
                 String taskType = parts[0].trim(); // "T", "D", "E"
@@ -113,15 +120,19 @@ public class Storage {
                     t = new Todo(taskDescription);
                     break;
                 case "D":
-                    if (parts.length < 4) continue;
+                    if (parts.length < 4) {
+                        continue;
+                    }
                     String date = parts[3].trim();
                     LocalDate dueDate = Parser.localDateParse(date);
                     t = new Deadline(taskDescription, dueDate);
                     break;
                 case "E":
-                    if (parts.length < 4) continue;
+                    if (parts.length < 4) {
+                        continue;
+                    }
                     String start = parts[3].trim();
-                    String end =  parts[4].trim();
+                    String end = parts[4].trim();
                     LocalDateTime startDate = Parser.localDateTimeParse(start);
                     LocalDateTime endDate = Parser.localDateTimeParse(end);
                     t = new Event(taskDescription, startDate, endDate);
