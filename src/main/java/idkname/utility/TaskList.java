@@ -6,14 +6,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-<<<<<<< HEAD
-=======
+
 import idkname.task.Deadline;
 import idkname.task.Event;
 import idkname.task.Task;
 import idkname.task.Todo;
 
->>>>>>> origin/branch-A-CodingStandard
 /**
  * Represents a list of tasks.
  * Provides operations to add, delete, retrieve, and update tasks.
