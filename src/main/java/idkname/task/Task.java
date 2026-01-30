@@ -84,32 +84,26 @@ public abstract class Task {
      *
      * @param load the boolean to check if loaded
      */
-    public void markDone(boolean load) {
+    public String markDone(boolean load) {
         if (this.isDone) {
-            System.out.println("Task already marked as done");
-            System.out.println(this.toString());
-            return;
+            return String.format("Task already marked as done: %n%s", this);
         }
         this.isDone = true;
         if (!load) {
-            System.out.println("Nice! I've marked this task as done:");
-            System.out.println(this.toString());
+            return String.format("Nice! I've marked this task as done: %n%s", this);
         }
+        return "";
     }
 
     /**
      * Marks Task undone and prints message
      * Prints different message if task already marked as done
      */
-    public void markUndone() {
+    public String markUndone() {
         if (this.isDone) {
-            System.out.println("OK, I've marked this task as not done yet:");
-            System.out.println(this.toString());
-            return;
+            return String.format("OK, I've marked this task as not done yet: %n%s", this);
         }
-        System.out.println("Task already marked as not done");
-        System.out.println(this.toString());
-        this.isDone = false;
+        return String.format("Task already marked as not done: %n%s", this);
     }
 
     /**
