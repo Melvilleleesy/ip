@@ -1,5 +1,6 @@
-package idkname;
+package idkname.ui;
 
+import idkname.main.IdKName;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;

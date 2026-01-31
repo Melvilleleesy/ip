@@ -8,14 +8,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-<<<<<<< HEAD
-=======
 import idkname.task.Deadline;
 import idkname.task.Event;
 import idkname.task.Task;
 import idkname.task.Todo;
 
->>>>>>> origin/branch-A-CodingStandard
 /**
  * Handles reading from and writing to a persistent storage file
  * that contains the user's task list.

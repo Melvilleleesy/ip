@@ -1,4 +1,4 @@
-package idkname;
+package idkname.main;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

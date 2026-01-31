@@ -28,11 +28,8 @@ public abstract class Task {
      *
      * @return the type code of the task
      */
-<<<<<<< HEAD
-    abstract public String getTaskType();
-=======
+
     public abstract String getTaskType();
->>>>>>> origin/branch-A-CodingStandard
 
     /**
      * Returns the due date of this task if it is a Deadline.
