@@ -144,7 +144,7 @@ public abstract class Task implements Comparable<Task> {
         assert this.description != null && other.getDescription() != null
                 : "Tasks compared must have non-null descriptions";
 
-        return (this.isDone == other.getIsMark())
+        return (this.isDone == other.getIsMarked())
                 && (description.equals(other.getDescription()));
     }
 
