@@ -94,7 +94,7 @@ public abstract class Task {
         if (!load) {
             return String.format("Nice! I've marked this task as done: %n%s", this);
         }
-        return "";
+        return ""; // marking from load
     }
 
     /**

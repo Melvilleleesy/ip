@@ -39,8 +39,6 @@ public class TaskList implements Iterable<Task> {
         switch (type) {
         case "todo":
             t = new Todo(item); // add description normally
-            this.tasks.add(t);
-            break;
         case "deadline":
             String[] deadlineParts = Parser.deadlineParse(item);
             if (deadlineParts == null) {
@@ -48,8 +46,6 @@ public class TaskList implements Iterable<Task> {
             }
             LocalDate date = Parser.localDateParse(deadlineParts[1]);
             t = new Deadline(deadlineParts[0], date);
-            this.tasks.add(t);
-            break;
         case "event":
             String[] eventParts = Parser.eventParse(item);
             if (eventParts == null) {
@@ -58,9 +54,10 @@ public class TaskList implements Iterable<Task> {
             LocalDateTime startDate = Parser.localDateTimeParse(eventParts[1]);
             LocalDateTime endDate = Parser.localDateTimeParse(eventParts[2]);
             t = new Event(eventParts[0], startDate, endDate);
-            this.tasks.add(t);
-            break;
         default:
+            if (t != null) {
+                this.tasks.add(t);
+            }
             break;
         }
         return String.format("Got it. I've added this task:"
