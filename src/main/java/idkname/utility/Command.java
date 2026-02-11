@@ -2,6 +2,8 @@ package idkname.utility;
 
 import java.time.DateTimeException;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Handles all user interactions with the application, including
@@ -76,11 +78,10 @@ public class Command {
      * @return formatted list, one task per line with 1-based indexing
      */
     public String printTaskList(TaskList taskList) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < taskList.getTasks().size(); i++) {
-            sb.append(String.format("%d. %s%n", i + 1, taskList.getTasks().get(i).toString()));
-        }
-        return sb.toString();
+        var tasks = taskList.getTasks(); // ArrayList<Task>
+        return IntStream.range(0, tasks.size())
+                .mapToObj(i -> String.format("%d. %s%n", i + 1, tasks.get(i)))
+                .collect(Collectors.joining());
     }
 
     /**
