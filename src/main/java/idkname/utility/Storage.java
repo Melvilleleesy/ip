@@ -36,7 +36,7 @@ public class Storage {
     }
 
     /**
-     * Saves the current tasks to the storage file.
+     * Saves the current tasks to the storage file (data/IDKName.txt).
      * Creates parent directories if they do not exist.
      * <p>
      * Tasks are serialized in the following formats:
@@ -66,11 +66,11 @@ public class Storage {
                 switch (taskType) {
                 case "D":
                     LocalDate dueDate = t.getDueDate();
-                    textToAdd = textToAdd + " | " + dueDate;
+                    textToAdd += " | " + dueDate;
                     break;
                 case "E":
                     LocalDateTime[] timePeriod = t.getTimePeriod();
-                    textToAdd = textToAdd + " | " + timePeriod[0] + " | " + timePeriod[1];
+                    textToAdd += " | " + timePeriod[0] + " | " + timePeriod[1];
                     break;
                 default:
                     break;
@@ -78,7 +78,6 @@ public class Storage {
                 fw.write(textToAdd);
                 fw.write(System.lineSeparator());
             }
-            fw.close();
         }
         System.out.println("Saving to: " + new File(this.filePath).getAbsolutePath());
     }
@@ -137,7 +136,7 @@ public class Storage {
                     continue;
                 }
                 if ("1".equals(taskDone)) {
-                    t.markDone(true);
+                    t.markDone(true); // true implies that this comes from loading so no printed message
                 }
                 this.tasks.add(t);
             }
