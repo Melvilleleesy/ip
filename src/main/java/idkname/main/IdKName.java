@@ -29,9 +29,12 @@ public class IdKName {
      * @param filePath the path to the storage file for saving and loading tasks
      */
     public IdKName(String filePath) {
+        assert filePath != null : "filePath must not be null";
+
         this.list = new TaskList();
         this.ui = new Command("IDKName", this.list);
         this.storage = new Storage(this.list, filePath);
+
         try {
             this.storage.load();
         } catch (FileNotFoundException e) {
