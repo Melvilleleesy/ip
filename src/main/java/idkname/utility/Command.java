@@ -161,6 +161,8 @@ public class Command {
      */
     public String getResponse(String userInput) {
         String[] parts = Parser.ordinaryParse(userInput);
+        assert parts.length > 0 : "Parser should never return blank string";
+        assert !parts[0].isBlank() : "Command word must not be blank";
         StringBuilder out = new StringBuilder();
 
         try {

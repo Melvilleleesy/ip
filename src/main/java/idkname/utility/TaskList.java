@@ -34,6 +34,7 @@ public class TaskList implements Iterable<Task> {
      * @throws DateTimeException if the input format for a date/time is invalid
      */
     public String add(String type, String item) {
+        assert (type != null) && (item != null) : "Index out of bounds";
         Task t = null;
         switch (type) {
         case "todo":
@@ -41,7 +42,6 @@ public class TaskList implements Iterable<Task> {
             this.tasks.add(t);
             break;
         case "deadline":
-
             String[] deadlineParts = Parser.deadlineParse(item);
             if (deadlineParts == null) {
                 throw new DateTimeException("");
@@ -88,6 +88,7 @@ public class TaskList implements Iterable<Task> {
      */
     public String delete(String taskNumber) {
         int taskId = Parser.getTaskId(taskNumber); // may throw NumberFormatException
+        assert taskId >= 0 && taskId < this.tasks.size() : "Index out of bounds";
         Task t = this.tasks.get(taskId);
         return String.format("Noted. I've removed this task: %n%s%n Now you have %d tasks in the list.%n",
                 t,
@@ -102,6 +103,7 @@ public class TaskList implements Iterable<Task> {
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     public Task get(int taskNumber) {
+        assert taskNumber >= 0 && taskNumber < this.tasks.size() : "Index out of bounds";
         return this.tasks.get(taskNumber);
     }
 
@@ -124,6 +126,7 @@ public class TaskList implements Iterable<Task> {
      */
     public String markDoneOrUndone(boolean b, String taskNumber) {
         int taskId = Parser.getTaskId(taskNumber); // may throw NumberFormatException
+        assert taskId >= 0 && taskId < this.tasks.size() : "Index out of bounds";
         Task t = this.tasks.get(taskId);
         if (b) {
             return t.markDone(false);
