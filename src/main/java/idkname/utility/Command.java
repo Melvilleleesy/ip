@@ -50,15 +50,6 @@ public class Command {
     }
 
     /**
-     * Returns the message shown when task data cannot be persisted to disk.
-     *
-     * @return user-facing I/O error message
-     */
-    public String showIoError() {
-        return "Unable to save data.";
-    }
-
-    /**
      * Returns the message shown when a task index is outside the valid range.
      *
      * @return user-facing error message for an invalid task number
@@ -192,8 +183,6 @@ public class Command {
         } catch (DateTimeException e) {
             out.append(showDateTimeError());
         }
-
         return out.toString();
     }
-
 }
