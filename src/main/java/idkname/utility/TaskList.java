@@ -34,37 +34,33 @@ public class TaskList implements Iterable<Task> {
      * @throws DateTimeException if the input format for a date/time is invalid
      */
     public String add(String type, String item) {
-        assert (type != null) && (item != null) : "Index out of bounds";
-        Task t = null;
-        switch (type) {
-        case "todo":
-            t = new Todo(item); // add description normally
-        case "deadline":
-            String[] deadlineParts = Parser.deadlineParse(item);
-            if (deadlineParts == null) {
-                throw new DateTimeException("");
-            }
-            LocalDate date = Parser.localDateParse(deadlineParts[1]);
-            t = new Deadline(deadlineParts[0], date);
-        case "event":
-            String[] eventParts = Parser.eventParse(item);
-            if (eventParts == null) {
-                throw new DateTimeException("");
-            }
-            LocalDateTime startDate = Parser.localDateTimeParse(eventParts[1]);
-            LocalDateTime endDate = Parser.localDateTimeParse(eventParts[2]);
-            t = new Event(eventParts[0], startDate, endDate);
-        default:
-            if (t != null) {
-                this.tasks.add(t);
-            }
-            break;
-        }
-        return String.format("Got it. I've added this task:"
-                        + "%n %s"
-                        + "%nNow you have %d tasks in the list.%n",
-                t, this.tasks.size()); // t will never be null as we check if type and item exist
+        assert type != null && item != null : "Index out of bounds";
+        Task t;
 
+        switch (type) {
+            case "todo":
+                t = new Todo(item);
+                break;
+            case "deadline":
+                String[] deadlineParts = Parser.deadlineParse(item);
+                if (deadlineParts == null) throw new DateTimeException("");
+                t = new Deadline(deadlineParts[0],
+                        Parser.localDateParse(deadlineParts[1]));
+                break;
+            case "event":
+                String[] eventParts = Parser.eventParse(item);
+                if (eventParts == null) throw new DateTimeException("");
+                t = new Event(eventParts[0],
+                        Parser.localDateTimeParse(eventParts[1]),
+                        Parser.localDateTimeParse(eventParts[2]));
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown task type: " + type);
+        }
+
+        this.tasks.add(t);
+        return String.format("Got it. I've added this task:%n %s%nNow you have %d tasks in the list.%n",
+                t, this.tasks.size());
     }
 
     /**

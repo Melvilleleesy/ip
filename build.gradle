@@ -58,11 +58,12 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "idkname"
     archiveClassifier = null
 }
 
 jar {
+    archiveBaseName = "idkname"
     manifest {
         attributes(
                 'Main-Class': 'idkname.Main'
