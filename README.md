@@ -30,16 +30,16 @@
 ### Steps
 1. Open IntelliJ (if you have a project open, click **File > Close Project** first).
 2. Open this project:
-   - Click **Open**.
-   - Select the project directory.
-   - Click **OK** and accept defaults for any further prompts.
+    - Click **Open**.
+    - Select the project directory.
+    - Click **OK** and accept defaults for any further prompts.
 3. Configure the project to use **JDK 17**:
-   - Go to **File > Project Structure > Project**.
-   - Set **Project SDK** to JDK 17.
-   - Set **Project language level** to **SDK default**.
+    - Go to **File > Project Structure > Project**.
+    - Set **Project SDK** to JDK 17.
+    - Set **Project language level** to **SDK default**.
 4. Run the main class:
-   - Navigate to `src/main/java/idkname/IDKName.java`.
-   - Right-click it and choose **Run 'IDKName.main()'**.
+    - Navigate to `src/main/java/idkname/IDKName.java`.
+    - Right-click it and choose **Run 'IDKName.main()'**.
 
 If setup is correct, you can move on to the chatbot!
 
@@ -48,36 +48,48 @@ If setup is correct, you can move on to the chatbot!
 ```
 1. list
 Shows all tasks currently in your task list, along with their type and completion status.
+eg. list
 
 2. bye
 Exits the chatbot gracefully and saves all tasks to file.
+eg. bye
 
 3. mark <task-id>
 Marks the task with the given ID as completed.
+eg. mark 1 (given there is a task-id 1 available)
 
 4. unmark <task-id>
 Unmarks the task with the given ID (sets it back to not done).
+eg. unmark 1 (given there is a task-id 1 available)
 
 5. find <keyword>
 Searches the task list for tasks containing the keyword in their description.
+eg. find CS2103T quiz
 
 6. todo <description>
 Creates a simple todo task with the given description.
+eg. todo CS2103T quiz
 
 7. deadline <description> / yyyy-MM-dd
 Creates a deadline task with the given description and a due date.
+eg. deadline CS2103T quiz / 2026-02-18
 
-8. event <description> / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss
+8. event <description> / yyyy-MM-ddTHH:mm:ss / yyyy-MM-ddTHH:mm:ss
+T here is referencing the letter 'T', not any meanings
 Creates an event task scheduled between a start and end date/time
+eg. event CS2103T lecture / 2026-02-13T16:00:00 / 2026-02-13T18:00:00
 
 9. sort
 Sorts all tasks in the list by type (Todos, Deadlines, Events).
+eg. sort
 
 10. sort <event, deadline, todo>
 Sorts and displays tasks filtered by the given type.
+eg. sort deadline
 
 11. help
 If you need any help for the instructions!
+eg. help
 ```
 - Eg. Usage
     ```bash
@@ -90,7 +102,7 @@ If you need any help for the instructions!
 
 This project uses **Gradle** as its build tool.
 
-- To build:
+- To build: 
     ```bash
     ./gradlew build
 
