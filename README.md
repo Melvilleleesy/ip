@@ -37,9 +37,9 @@
     - Go to **File > Project Structure > Project**.
     - Set **Project SDK** to JDK 17.
     - Set **Project language level** to **SDK default**.
-4. Run the main class:
-    - Navigate to `src/main/java/idkname/IDKName.java`.
-    - Right-click it and choose **Run 'IDKName.main()'**.
+4. Run the launcher:
+    - Navigate to `src/main/java/idkname/Launcher.java`.
+    - Right-click it and choose **Run 'Launcher.main()'**.
 
 If setup is correct, you can move on to the chatbot!
 
