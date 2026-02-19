@@ -60,9 +60,7 @@ public class Storage {
                 String taskType = t.getTaskType();
                 int taskDone = t.isDone() ? 1 : 0;
                 String taskDescription = t.getDescription();
-                String textToAdd = String.format("%s | %d | %s",
-                        taskType, taskDone, taskDescription);
-
+                String textToAdd = String.format("%s | %d | %s", taskType, taskDone, taskDescription);
                 switch (taskType) {
                 case "D":
                     LocalDate dueDate = t.getDueDate();

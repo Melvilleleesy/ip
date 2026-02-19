@@ -138,7 +138,7 @@ public class Command {
      *   <li><code>find &lt;keyword&gt;</code> — search for tasks containing a keyword</li>
      *   <li><code>todo &lt;description&gt;</code> — add a todo task</li>
      *   <li><code>deadline &lt;description&gt; / yyyy-MM-dd</code> — add a deadline task with a due date</li>
-     *   <li><code>event &lt;description&gt; / yyyy-MM-dd'T'HH:mm:ss / yyyy-MM-dd'T'HH:mm:ss</code>
+     *   <li><code>event &lt;description&gt; / yyyy-MM-ddTHH:mm:ss / yyyy-MM-ddTHH:mm:ss</code>
      *       — add an event task with start and end times</li>
      *   <li><code>sort &lt;taskType&gt;</code> — sort and display tasks filtered by type
      *       (e.g., <code>sort deadline</code>)</li>
@@ -157,7 +157,7 @@ public class Command {
                 + "%n5) find description"
                 + "%n6) todo description"
                 + "%n7) deadline description/%nyyyy-mm-dd"
-                + "%n8) event description/%nyyyy-MM-dd'T'HH:mm:ss/%nyyyy-MM-dd'T'HH:mm:ss"
+                + "%n8) event description/%nyyyy-MM-ddTHH:mm:ss/%nyyyy-MM-ddTHH:mm:ss"
                 + "%n9) sort tasktype"
                 + "%n10) help");
     }
@@ -182,45 +182,36 @@ public class Command {
      * </ul>
      * Handles invalid commands and errors gracefully by showing appropriate error messages.
      */
-
     public String getResponse(String userInput) {
         String[] parts = Parser.ordinaryParse(userInput);
-        assert parts.length > 0 : "Parser should never return blank string";
-        assert !parts[0].isBlank() : "Command word must not be blank";
-        StringBuilder out = new StringBuilder();
+        String command = parts[0].toLowerCase();
+        String arg = parts.length > 1 ? parts[1] : null;
 
         try {
-            String command = parts[0].toLowerCase();
-            if (command.equals("bye")) {
-                out.append("Bye. Hope to see you again soon!\n");
-            } else if (command.equals("list")) {
-                out.append(printTaskList(tasks)).append('\n');
-            } else if (command.equals("help")) {
-                out.append(showHelp());
-            } else if (parts.length > 1) {
-                switch (command) {
-                case "mark" -> out.append(this.tasks.markDoneOrUndone(true, parts[1]));
-                case "unmark" -> out.append(this.tasks.markDoneOrUndone(false, parts[1]));
-                case "delete" -> out.append(this.tasks.delete(parts[1]));
-                case "todo" -> out.append(this.tasks.add("todo", parts[1]));
-                case "deadline" -> out.append(this.tasks.add("deadline", parts[1]));
-                case "event" -> out.append(this.tasks.add("event", parts[1]));
-                case "find" -> out.append(printTaskList(this.tasks.find(parts[1])));
-                case "sort" -> out.append(printTaskList(this.tasks.sortTasks(parts[1])));
-                default -> out.append(showUnknownCommandError());
-                }
-            } else if (command.equals("sort")) {
-                out.append(printTaskList((this.tasks.sortTasks())));
-            } else {
-                out.append(showMissingArgumentError());
-            }
+            return switch (command) {
+                case "bye" -> "Bye. Hope to see you again soon!\n";
+                case "list" -> printTaskList(tasks) + "\n";
+                case "help" -> showHelp();
+                case "mark" -> tasks.markDoneOrUndone(true, arg);
+                case "unmark" -> tasks.markDoneOrUndone(false, arg);
+                case "delete" -> tasks.delete(arg);
+                case "todo" -> tasks.add("todo", arg);
+                case "deadline" -> tasks.add("deadline", arg);
+                case "event" -> tasks.add("event", arg);
+                case "find" -> printTaskList(tasks.find(arg));
+                case "sort" -> printTaskList(arg == null
+                        ? tasks.sortTasks()
+                        : tasks.sortTasks(arg));
+                default -> (arg == null
+                        ? showMissingArgumentError()
+                        : showUnknownCommandError());
+            };
         } catch (NumberFormatException e) {
-            out.append(showNumberFormatError());
+            return showNumberFormatError();
         } catch (IndexOutOfBoundsException e) {
-            out.append(showIndexOutOfBoundsError());
+            return showIndexOutOfBoundsError();
         } catch (DateTimeException e) {
-            out.append(showDateTimeError());
+            return showDateTimeError();
         }
-        return out.toString();
     }
 }

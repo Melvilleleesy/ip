@@ -36,7 +36,6 @@ public class TaskList implements Iterable<Task> {
     public String add(String type, String item) {
         assert type != null && item != null : "Index out of bounds";
         Task t;
-
         switch (type) {
             case "todo":
                 t = new Todo(item);
